@@ -27,6 +27,11 @@ If n is odd, as 2*(p+q) is even, we can let p be a odd number. Then the sum of a
   <script>
   insert();
   </script>
+<h3 >Create a list with links to two interactive visualizations</h3>
+<ul>
+  <li></li>
+  <li></li>
+</ul>
 </body>
 
 </html>
