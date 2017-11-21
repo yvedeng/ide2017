@@ -1,4 +1,4 @@
-<h1>Excise 1</h1>
+<h1>Exercise 1</h1>
 For any number n > 1, n= 3*p + 2*q = 2*(p+q) + p
 <br />
 Thus if n is even, as 2*(p+q) is even, we can let p equal to a even number. Then the sum of a even number and a even number is still even.
