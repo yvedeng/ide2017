@@ -7,7 +7,9 @@
         }
   </style>
   <script>
-  document.write('<img src="https://i.pinimg.com/736x/bc/f0/4e/bcf04eafebdf707b8d900f02e6d8bd70--photo-tag-touch-me.jpg">')
+  function insert(){
+  document.write('<img width = 200 src="https://i.pinimg.com/736x/bc/f0/4e/bcf04eafebdf707b8d900f02e6d8bd70--photo-tag-touch-me.jpg">')
+  }
   </script>
 </head>
 
@@ -21,8 +23,10 @@ If n is odd, as 2*(p+q) is even, we can let p be a odd number. Then the sum of a
 <br />
 <h3 id="E2">Add image</h3>
 <img width=200 src="http://catgifts.net/i/7a203639-3a5e-4280-8d02-46d2e9f62ca2.jpeg">
-
+<h3 >Add image with JavaScript</h3>
+  <script>
+  insert();
+  </script>
 </body>
 
 </html>
-
