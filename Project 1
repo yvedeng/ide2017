@@ -7,7 +7,7 @@
         }
   </style>
   <script>
-  
+  document.write('<img src="https://i.pinimg.com/736x/bc/f0/4e/bcf04eafebdf707b8d900f02e6d8bd70--photo-tag-touch-me.jpg">')
   </script>
 </head>
 
@@ -25,3 +25,4 @@ If n is odd, as 2*(p+q) is even, we can let p be a odd number. Then the sum of a
 </body>
 
 </html>
+
