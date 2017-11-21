@@ -1,9 +1,27 @@
-<h1>Exercise 1</h1>
+<! DOCTYPE html>
+<html>
+<head>
+  <style>
+    #E2{
+         color:grey;
+        }
+  </style>
+  <script>
+  
+  </script>
+</head>
+
+<body>
+<h3>Proof of n</h3>
 For any number n > 1, n= 3*p + 2*q = 2*(p+q) + p
 <br />
 Thus if n is even, as 2*(p+q) is even, we can let p equal to a even number. Then the sum of a even number and a even number is still even.
 <br />
 If n is odd, as 2*(p+q) is even, we can let p be a odd number. Then the sum of a even number and a odd number is odd.
 <br />
-<h1>Excise 2</h1>
-<img src="http://catgifts.net/i/7a203639-3a5e-4280-8d02-46d2e9f62ca2.jpeg">
+<h3 id="E2">Add image</h3>
+<img width=200 src="http://catgifts.net/i/7a203639-3a5e-4280-8d02-46d2e9f62ca2.jpeg">
+
+</body>
+
+</html>
