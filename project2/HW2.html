@@ -2,7 +2,7 @@
 <html>
 <head>
     <script src="https://d3js.org/d3.v4.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="HW2.css">
+    <!--<link rel="stylesheet" type="text/css" href="HW2.css">-->
     <!DOCTYPE html>
     <meta charset="utf-8">
     <style> /* set the CSS */
@@ -18,10 +18,10 @@
     .d3-tip {
         line-height: 1;
         font-weight: bold;
-        padding: 12px;
+        padding: 10px;
         background: rgba(0, 0, 0, 0.8);
         color: #fff;
-        border-radius: 2px;
+        border-radius: 1px;
     }
     </style>
 </head>
@@ -43,8 +43,7 @@
     var x = d3.scaleTime().range([0, width-padding]);
     var y = d3.scaleLinear().range([height-padding, 0]);
     // parse the date / time
-    //var parseTime = d3.timeParse("%Y");
-    var parseTime = d3.timeFormat("%Y");
+    var parseTime = d3.timeParse("%Y");
     // define the line
     var valueline = d3.line()
         .x(function(d) { return x(d.YEAR); })
@@ -65,7 +64,7 @@
 
         // format the data
         data.forEach(function(d) {
-            //d.YEAR = parseTime(d.YEAR);
+            d.YEAR = parseTime(d.YEAR);
             console.log("year: ", d.YEAR);
             if (d.metANN == 999.90) {
                 d.metANN = 0;
@@ -74,7 +73,7 @@
         });
 
         // Scale the range of the data
-        console.log("exten", d3.extent(data, function(d) { return d.YEAR; }));
+        // console.log("extent", d3.extent(data, function(d) { return d.YEAR; }));
         x.domain(d3.extent(data, function(d) { return d.YEAR; }));
         y.domain([d3.min(data, function(d) { return d.metANN; }), d3.max(data, function(d) { return d.metANN; })]);
 
@@ -82,10 +81,11 @@
            .attr('class', 'd3-tip')
            .offset([120, 40])
            .html(function(d) {
-                return "<strong>" + d.metANN +
-                    " Celsius</strong><br>" +
-                    parseTime(d.YEAR) + "<br>" +
-                    "Copenhagen"+ "<br>";
+               console.log("time: " + d.YEAR)
+                return "<strong> Year: " + d.YEAR.getFullYear() +
+                    "</strong><br/>" + "Temperature: " +
+                    d.metANN + "<br/>" +
+                    "Copenhagen"+ "<br/>";
             });
 
         svg.call(tip);
