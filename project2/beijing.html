@@ -58,16 +58,8 @@
         .append("g")
         .attr("transform","translate(" + margin.left + "," + margin.bottom + ")");
 
-    svg.append("text")
-        .attr("x", (width / 2))
-        .attr("y", 0 - (margin.top / 2))
-        .attr("text-anchor", "middle")
-        .style("font-size", "16px")
-        .style("text-decoration", "underline")
-        .text("Copenhagen");
-
     // Get the data
-    d3.csv("Copenhagen.csv", function(error, data) {
+    d3.csv("beijing.csv", function(error, data) {
         if (error) throw error;
 
         // format the data
@@ -86,14 +78,14 @@
         y.domain([d3.min(data, function(d) { return d.metANN; }), d3.max(data, function(d) { return d.metANN; })]);
 
         var tip = d3.tip()
-           .attr('class', 'd3-tip')
-           .offset([120, 40])
-           .html(function(d) {
-               console.log("time: " + d.YEAR)
+            .attr('class', 'd3-tip')
+            .offset([120, 40])
+            .html(function(d) {
+                console.log("time: " + d.YEAR)
                 return "<strong> Year: " + d.YEAR.getFullYear() +
                     "</strong><br/>" + "Temperature: " +
                     d.metANN + "<br/>" +
-                    "Copenhagen"+ "<br/>";
+                    "Beijing"+ "<br/>";
             });
 
         svg.call(tip);
@@ -130,7 +122,6 @@
 
 </script>
 
-
 <button onclick = "goCopenhagen()"> Copenhagen </button> <br/>
 <button onclick = "goBeijing()"> Beijing </button> <br/>
 <button onclick = "goKaunas()"> Kaunas </button> <br/>
@@ -146,6 +137,5 @@
         window.location = "kaunas.html";
     }
 </script>
-
 </body>
 </html>
