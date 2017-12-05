@@ -61,6 +61,8 @@
         <i>svg.on("mouseon")</i> to achieve the "pop up box" when you move your cursor on any of the point
     on the line. And this box would tell you more details such as the year, the specific temperature and so
     on. </p>
+    <p>Regarding the second type of visualization, it is a Heat map. We use different colors to represent the temperature
+        per month over 100 years, so we can see the climate changes vividly. </p>
     <h3>Discussions: </h3>
     <p><b>Beijing:</b> As we can see from the plot, from 1939 to 2017, the temperature over 78 years is very
     stable, but we still can see the temperature is getting a little higher. Before 1989, the annual temperature has
@@ -73,7 +75,7 @@
     in winter is rather different year to year. Besides of the variation, we can still see the year with relatively
         high temperature is occured more frequently over recent years.</p>
     <h3>Conclusions: </h3>
-    To conclude all the observations, the global warming is indeed a real thing. It changes bit by bit, so slow that
+    To conclude all the observations mentioned above, the global warming is indeed a real thing. It changes bit by bit, so slow that
     we can not even notice. However, by comparing the data over around 100 years, we can directly see what is
     going on.
 </section>
@@ -85,7 +87,7 @@
              answering the main question because oceans actually occupy more area on earth than lands. With respect to the visualization, I would draw a linear line to represent the
         trend of the temperature over the years. If this linear line is growing then I would be confident to answer the question instead of
         obersering by bare eyes like what we did. </li>
-        <li> </li>
+        <li> <b> Xiaolan: </b> </li>
         <li> <b>Povilas:</b> It is hard to answer what is reasonable but probably it is up to 5-10 megabytes. Obviously, the smaller it is - the better because every user will have to load everything. d3.js users in forums say that you can load 100mb or maybe even 1Gb files but that would be pushing the limits.
             E.g. One of our data files for this assignment was about 10-15kb, if we would like to create world map with switching temperatures based on years set years, we would need at least 1000-2000 locations, which would scales size to 20-30mb. Of course visualization itself wouldn't be very complicated, so that would be still reasonable if you have normal internet connections.
             There are various methods to deal with big data sets: using Canvas instead of SVG/DOM could reduce complexity. CSV or TSV files are lighter than JSON. Well structured code, reusing functions and similar things can help slightly. Other thing is simply cropping your data, at some point it gets unreasonable to try showing every single point, it becomes a mess. Using libraries like Crossfilter helps as well.
