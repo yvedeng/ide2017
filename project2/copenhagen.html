@@ -5,6 +5,7 @@
     <!--<link rel="stylesheet" type="text/css" href="HW2.css">-->
     <!DOCTYPE html>
     <meta charset="utf-8">
+
     <style> /* set the CSS */
 
     .line {
@@ -16,6 +17,7 @@
     .datapoint:hover{
         fill: steelblue;
     }
+
     .d3-tip {
         line-height: 1;
         font-weight: bold;
@@ -24,6 +26,7 @@
         color: #fff;
         border-radius: 1px;
     }
+
     .legend {
         font-size: 16px;
         font-weight: bold;
@@ -36,11 +39,13 @@
 
 <body>
 
+<h3> The first type of visualizations </h3>
 <!-- load the d3.js library -->
 <script src="https://d3js.org/d3.v4.min.js"></script>
 <script src="d3-tip.js"></script>
-<script>
+<link rel="stylesheet" type="text/css">
 
+<script>
     // set the dimensions and margins of the graph
     var margin = {top: 20, right: 20, bottom: 30, left: 50},
         width = 960 - margin.left - margin.right,
@@ -89,7 +94,13 @@
             if (d.metANN == 999.90) {
                 d.metANN = 0;
             };
-            console.log(d.metANN);
+            if (d.JJA == 999.90) {
+                d.JJA = 0;
+            };
+            if (d.DJF == 999.90) {
+                d.DJF = 0;
+            };
+            // console.log(d.metANN);
         });
 
         // Scale the range of the data
@@ -101,7 +112,6 @@
            .attr('class', 'd3-tip')
            .offset([120, 40])
            .html(function(d) {
-               console.log("time: " + d.YEAR)
                 return "<strong> Year: " + d.YEAR.getFullYear() +
                     "</strong><br/>" + "Annual Average Temperature: " +
                     d.metANN + "<br/>" +
@@ -111,7 +121,6 @@
             .attr('class', 'd3-tip')
             .offset([120, 40])
             .html(function(d) {
-                console.log("time: " + d.YEAR)
                 return "<strong> Year: " + d.YEAR.getFullYear() +
                     "</strong><br/>" + " Winter Temperature: " +
                     d.DJF + "<br/>" +
@@ -121,7 +130,6 @@
             .attr('class', 'd3-tip')
             .offset([120, 40])
             .html(function(d) {
-                console.log("time: " + d.YEAR)
                 return "<strong> Year: " + d.YEAR.getFullYear() +
                     "</strong><br/>" + "Summer Temperature: " +
                     d.JJA + "<br/>" +
@@ -129,7 +137,6 @@
             });
 
         svg.call(tip1);
-
 
         // Add the valueline path.
         svg.append("path")
@@ -143,7 +150,7 @@
             .attr("y", 390)
             .attr("class", "legend")    // style the legend
             .style("fill", "steelblue")
-            .text("Anual Temperature");
+            .text("Annual Temperature");
 
         svg.selectAll(".dot")
             .data(data)
@@ -151,7 +158,7 @@
             .attr('class', 'datapoint')
             .attr('cx', function(d) { return x(d.YEAR); })
             .attr('cy', function(d) { return y(d.metANN); })
-            .attr('r', 4)
+            .attr('r', 3)
             .attr('fill', 'white')
             .attr('stroke', 'steelblue')
             .attr('stroke-width', '3')
@@ -164,14 +171,14 @@
         svg.append("path")
             .data([data])
             .attr("class", "line")
-            .style("stroke", "red")
+            .style("stroke", "grey")
             .attr("d", valueline2);
 
         svg.append("text")
             .attr("x", (legendSpace/3+legendSpace))  // space legend
             .attr("y", 390)
             .attr("class", "legend")    // style the legend
-            .style("fill", "red")
+            .style("fill", "grey")
             .text("Winter Temperature");
 
         svg.selectAll(".dot")
@@ -180,15 +187,15 @@
             .attr('class', 'datapoint')
             .attr('cx', function(d) { return x(d.YEAR); })
             .attr('cy', function(d) { return y(d.DJF); })
-            .attr('r', 4)
+            .attr('r', 3)
             .attr('fill', 'white')
-            .attr('stroke', 'red')
+            .attr('stroke', 'grey')
             .attr('stroke-width', '3')
             .on('mouseover', tip2.show)
             .on('mouseout', tip2.hide);
 
         svg.call(tip3);
-        // Add the valueline2 path.
+        // Add the valueline3 path.
 
         svg.append("path")
             .data([data])
@@ -209,7 +216,7 @@
             .attr('class', 'datapoint')
             .attr('cx', function(d) { return x(d.YEAR); })
             .attr('cy', function(d) { return y(d.JJA); })
-            .attr('r', 4)
+            .attr('r', 3)
             .attr('fill', 'white')
             .attr('stroke', 'green')
             .attr('stroke-width', '3')
@@ -236,5 +243,29 @@
     });
 
 </script>
+
+<br/>
+<button id = "btn1" onclick = "goCopenhagen()"> Copenhagen </button> <br/>
+<button id = "btn2" onclick = "goBeijing()"> Beijing </button> <br/>
+<button id = "btn3" onclick = "goKaunas()"> Kaunas </button> <br/>
+<button id = "btn4" onclick = "goIndex()"> Back to Index </button> <br/>
+<script language="javascript" type="text/javascript">
+    function goCopenhagen()
+    {
+        // document.getElementById("btn1").style.left = width/3;
+        window.location = "copenhagen.html";
+    }
+    function goBeijing() {
+        window.location = "beijing.html";
+    }
+    function goKaunas(){
+        window.location = "kaunas.html";
+    }
+    function goIndex(){
+        window.location = "index.html";
+    }
+</script>
+
+
 </body>
 </html>

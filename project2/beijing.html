@@ -5,6 +5,7 @@
     <!--<link rel="stylesheet" type="text/css" href="HW2.css">-->
     <!DOCTYPE html>
     <meta charset="utf-8">
+
     <style> /* set the CSS */
 
     .line {
@@ -12,9 +13,11 @@
         stroke: steelblue;
         stroke-width: 2px;
     }
+
     .datapoint:hover{
         fill: steelblue;
     }
+
     .d3-tip {
         line-height: 1;
         font-weight: bold;
@@ -23,16 +26,25 @@
         color: #fff;
         border-radius: 1px;
     }
+
+    .legend {
+        font-size: 16px;
+        font-weight: bold;
+        text-anchor: middle;
+    }
+
+
     </style>
 </head>
 
 <body>
-
+<h3> The first type of visualizations </h3>
 <!-- load the d3.js library -->
 <script src="https://d3js.org/d3.v4.min.js"></script>
 <script src="d3-tip.js"></script>
-<script>
+<link rel="stylesheet" type="text/css">
 
+<script>
     // set the dimensions and margins of the graph
     var margin = {top: 20, right: 20, bottom: 30, left: 50},
         width = 960 - margin.left - margin.right,
@@ -48,7 +60,19 @@
     var valueline = d3.line()
         .x(function(d) { return x(d.YEAR); })
         .y(function(d) { return y(d.metANN); });
+    //define line2
+    // define the 2nd line
+    var valueline2 = d3.line()
+        .x(function(d) { return x(d.YEAR); })
+        .y(function(d) { return y(d.DJF); });
+    // define the 3rd line
+    var valueline3 = d3.line()
+        .x(function(d) { return x(d.YEAR); })
+        .y(function(d) { return y(d.JJA); });
 
+    var color = d3.scaleOrdinal(d3.schemeCategory10);
+
+    legendSpace = width/3;
     // append the svg obgect to the body of the page
     // appends a 'group' element to 'svg'
     // moves the 'group' element to the top left margin
@@ -59,7 +83,7 @@
         .attr("transform","translate(" + margin.left + "," + margin.bottom + ")");
 
     // Get the data
-    d3.csv("beijing.csv", function(error, data) {
+    d3.csv("Beijing.csv", function(error, data) {
         if (error) throw error;
 
         // format the data
@@ -69,26 +93,49 @@
             if (d.metANN == 999.90) {
                 d.metANN = 0;
             };
-            console.log(d.metANN);
+            if (d.JJA == 999.90) {
+                d.JJA = 0;
+            };
+            if (d.DJF == 999.90) {
+                d.DJF = 0;
+            };
+            // console.log(d.metANN);
         });
 
         // Scale the range of the data
         // console.log("extent", d3.extent(data, function(d) { return d.YEAR; }));
         x.domain(d3.extent(data, function(d) { return d.YEAR; }));
-        y.domain([d3.min(data, function(d) { return d.metANN; }), d3.max(data, function(d) { return d.metANN; })]);
+        y.domain([d3.min(data, function(d) { return Math.min(d.metANN, d.DJF,d.JJA); }), d3.max(data, function(d) { return Math.max(d.metANN, d.DJF,d.JJA); })]);
 
-        var tip = d3.tip()
+        var tip1 = d3.tip()
             .attr('class', 'd3-tip')
             .offset([120, 40])
             .html(function(d) {
-                console.log("time: " + d.YEAR)
                 return "<strong> Year: " + d.YEAR.getFullYear() +
-                    "</strong><br/>" + "Temperature: " +
+                    "</strong><br/>" + "Annual Average Temperature: " +
                     d.metANN + "<br/>" +
                     "Beijing"+ "<br/>";
             });
+        var tip2 = d3.tip()
+            .attr('class', 'd3-tip')
+            .offset([120, 40])
+            .html(function(d) {
+                return "<strong> Year: " + d.YEAR.getFullYear() +
+                    "</strong><br/>" + " Winter Temperature: " +
+                    d.DJF + "<br/>" +
+                    "Beijing"+ "<br/>";
+            });
+        var tip3 = d3.tip()
+            .attr('class', 'd3-tip')
+            .offset([120, 40])
+            .html(function(d) {
+                return "<strong> Year: " + d.YEAR.getFullYear() +
+                    "</strong><br/>" + "Summer Temperature: " +
+                    d.JJA + "<br/>" +
+                    "Beijing"+ "<br/>";
+            });
 
-        svg.call(tip);
+        svg.call(tip1);
 
         // Add the valueline path.
         svg.append("path")
@@ -96,18 +143,92 @@
             .attr("class", "line")
             .attr("d", valueline);
 
+        // Add the Legend
+        svg.append("text")
+            .attr("x", (legendSpace/3))  // space legend
+            .attr("y", 390)
+            .attr("class", "legend")    // style the legend
+            .style("fill", "steelblue")
+            .text("Annual Temperature");
+
         svg.selectAll(".dot")
             .data(data)
             .enter().append("circle")
             .attr('class', 'datapoint')
             .attr('cx', function(d) { return x(d.YEAR); })
             .attr('cy', function(d) { return y(d.metANN); })
-            .attr('r', 6)
+            .attr('r', 3)
             .attr('fill', 'white')
             .attr('stroke', 'steelblue')
             .attr('stroke-width', '3')
-            .on('mouseover', tip.show)
-            .on('mouseout', tip.hide);
+            .on('mouseover', tip1.show)
+            .on('mouseout', tip1.hide);
+
+        svg.call(tip2);
+        // Add the valueline2 path.
+
+        svg.append("path")
+            .data([data])
+            .attr("class", "line")
+            .style("stroke", "grey")
+            .attr("d", valueline2);
+
+        svg.append("text")
+            .attr("x", (legendSpace/3+legendSpace))  // space legend
+            .attr("y", 390)
+            .attr("class", "legend")    // style the legend
+            .style("fill", "grey")
+            .text("Winter Temperature");
+
+        svg.selectAll(".dot")
+            .data(data)
+            .enter().append("circle")
+            .attr('class', 'datapoint')
+            .attr('cx', function(d) { return x(d.YEAR); })
+            .attr('cy', function(d) { return y(d.DJF); })
+            .attr('r', 3)
+            .attr('fill', 'white')
+            .attr('stroke', 'grey')
+            .attr('stroke-width', '3')
+            .on('mouseover', tip2.show)
+            .on('mouseout', tip2.hide);
+
+        svg.call(tip3);
+        // Add the valueline3 path.
+
+        svg.append("path")
+            .data([data])
+            .attr("class", "line")
+            .style("stroke", "green")
+            .attr("d", valueline3);
+
+        svg.append("text")
+            .attr("x", (legendSpace/3+2*legendSpace))  // space legend
+            .attr("y", 390)
+            .attr("class", "legend")    // style the legend
+            .style("fill", "green")
+            .text("Summer Temperature");
+
+        svg.selectAll(".dot")
+            .data(data)
+            .enter().append("circle")
+            .attr('class', 'datapoint')
+            .attr('cx', function(d) { return x(d.YEAR); })
+            .attr('cy', function(d) { return y(d.JJA); })
+            .attr('r', 3)
+            .attr('fill', 'white')
+            .attr('stroke', 'green')
+            .attr('stroke-width', '3')
+            .on('mouseover', tip3.show)
+            .on('mouseout', tip3.hide);
+
+        //Add title
+        svg.append("text")
+            .attr("x", (width / 2))
+            .attr("y", 0 - (margin.top / 2))
+            .attr("text-anchor", "middle")
+            .style("font-size", "16px")
+            .text("Temperature for Beijing");
 
         // Add the X Axis
         svg.append("g")
@@ -122,13 +243,16 @@
 
 </script>
 
-<button onclick = "goCopenhagen()"> Copenhagen </button> <br/>
-<button onclick = "goBeijing()"> Beijing </button> <br/>
-<button onclick = "goKaunas()"> Kaunas </button> <br/>
+<br/>
+<button id = "btn1" onclick = "goCopenhagen()"> Copenhagen </button> <br/>
+<button id = "btn2" onclick = "goBeijing()"> Beijing </button> <br/>
+<button id = "btn3" onclick = "goKaunas()"> Kaunas </button> <br/>
+<button id = "btn4" onclick = "goIndex()"> Back to Index </button> <br/>
 <script language="javascript" type="text/javascript">
     function goCopenhagen()
     {
-        window.location = "HW2.html";
+        // document.getElementById("btn1").style.left = width/3;
+        window.location = "copenhagen.html";
     }
     function goBeijing() {
         window.location = "beijing.html";
@@ -136,6 +260,10 @@
     function goKaunas(){
         window.location = "kaunas.html";
     }
+    function goIndex(){
+        window.location = "index.html";
+    }
 </script>
+
 </body>
 </html>

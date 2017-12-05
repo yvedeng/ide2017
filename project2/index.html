@@ -1,15 +1,97 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8">
-    <title>Project 2</title>
-    <script type="text/javascript" src="https://d3js.org/d3.v4.min.js"></script>
-    <script src="beijing.js"></script>
+    <meta charset="UTF-8">
+    <title>Assignment 2</title>
+    <style>
+        #E2{
+            color:red;
+        }
+        #mainbox{
+            margin: 0 auto;
+            width: 70%;
+            text-align: left;
+        }
+    </style>
 </head>
-
 <body>
-<script type="text/javascript">
-    // Your D3 code will go here
-</script>
+<div id="mainbox">
+<h1>Assignment 2</h1>
+<section>
+    <h2>Question 1:</h2>
+    <h3><a href="copenhagen.html"> Here is the first type of visualization </a></h3>
+    <p>Source links and the citations: </p>
+    <ol>
+        <li>dsa</li>
+    </ol>
+    <h3><a href="Povilas_heatmap/index.html"> Here is the second type of visualization </a> </h3>
+    <p>Source links and the citations: </p>
+    <ol>
+        <li>dsa</li>
+    </ol>
+</section>
+
+<section>
+    <h2>Question 2:</h2>
+    <h3>Motivation:</h3>
+    <p>The movitation for us is to figure out how has the weather changed over the past 100 years.
+    It is rather difficult to see all the trends and the differences, therefore we need to visualize
+    the data over the 100 years and observe the trends.</p>
+    <h3>Methods:</h3>
+    <p>We picked 3 cities: Copenhagen, Kaunas and Beijing as our data set. Due to the format reason, we
+        need to preprocess the data. We did following things: </p>
+    <ol>
+        <li> Change the spaces to comma or tab; </li>
+        <p>*Povilas used <i>tsv</i> to load the data therefore he changed the spaces into the tab while
+        Yifang and Xiaolan used <i>csv</i> as what we learned from the lecture hence comma is the choice for this.</p>
+        <li> Remove the dash sign from the headers; </li>
+        <p>*We realized that d3 does not recognize the column name with the dash symbol, therefore we simply
+        removed them. </p>
+        <li>Replace the unknown number - 999.90 to 0 ;</li>
+        <p>*We view this number as an error, therefore for some reasons we set it as 0. This might not make sense
+        when a city has a lot 0 degrees in several months so that we can not easily see this number as an error.
+            Fortunately, we do not have so much errors in our data set and the cities we picked are not cold enough like that.
+            Besides, we only used the annual and the seasonal data, such as winter and summer, so even if the winter trend is a
+            bit misleading, the annual data would still say something meaningful. The reason that we don't pick the spring
+        and autumn data is they are too similar to be compared. </p>
+    </ol>
+    <p>Second, line graphs are used to plot the temperature over years for the cities individually. The temperature
+    trend of a city is mutually independent to any other city's, hence we did not put 3 trends
+        in the same plot. To make the graph more interative, we use <i>svg.on("mouseover")</i> and
+        <i>svg.on("mouseon")</i> to achieve the "pop up box" when you move your cursor on any of the point
+    on the line. And this box would tell you more details such as the year, the specific temperature and so
+    on. </p>
+    <h3>Discussions: </h3>
+    <p><b>Beijing:</b> As we can see from the plot, from 1939 to 2017, the temperature over 78 years is very
+    stable, but we still can see the temperature is getting a little higher. Before 1989, the annual temperature has
+    never higher than 13 degree, however after this time, the temperature is still going up and down and reach
+    the highest point at 14.14 in 2014. Through the comparision of the seasonal data, you can easily see the
+    trend of the temperature in the winter gets higher and higher. </p>
+    <p><b>Copenhagen:</b> The data of Copenhagen is well-reserved from 1980 to 2017. Even though the data is up and down
+    in a relatively large span, the trend of the temperature is going higher in general.</p>
+    <p><b>Kaunas:</b> The time span of City Kaunas is from 1922 to 2017. The interesting point is the temperature
+    in winter is rather different year to year. Besides of the variation, we can still see the year with relatively
+        high temperature is more frequent over recent years.</p>
+    <h3>Conclusions: </h3>
+    To conclude all the observations, the global warming is indeed a real thing. It changes bit by bit, so slow that
+    we can not even notice. However, by comparing the data over around 100 years, we can directly see what is
+    going on.
+</section>
+
+<section>
+    <h2>Question 3:</h2>
+    <ol>
+        <li> <b>Yifang:</b> The data set we used is based on countries. However, global warming is on a global table, therefore I would use the temperature of the oceans over around 100 years as our additional dataset. This is able to higher my confidence of
+             answering the main question because oceans actually occupy more area on earth than lands. With respect to the visualization, I would draw a linear line to represent the
+        trend of the temperature over the years. If this linear line is growing then I would be confident to answer the question instead of
+        obersering by bare eyes like what we did. </li>
+        <li> </li>
+        <li> <b>Povilas:</b> It is hard to answer what is reasonable but probably it is up to 5-10 megabytes. Obviously, the smaller it is - the better because every user will have to load everything. d3.js users in forums say that you can load 100mb or maybe even 1Gb files but that would be pushing the limits.
+            E.g. One of our data files for this assignment was about 10-15kb, if we would like to create world map with switching temperatures based on years set years, we would need at least 1000-2000 locations, which would scales size to 20-30mb. Of course visualization itself wouldn't be very complicated, so that would be still reasonable if you have normal internet connections.
+            There are various methods to deal with big data sets: using Canvas instead of SVG/DOM could reduce complexity. CSV or TSV files are lighter than JSON. Well structured code, reusing functions and similar things can help slightly. Other thing is simply cropping your data, at some point it gets unreasonable to try showing every single point, it becomes a mess. Using libraries like Crossfilter helps as well.
+            Yes, we didn't use all the points from every dataset, so cropping those would reduce size. </li>
+    </ol>
+</section>
+
 </body>
 </html>
