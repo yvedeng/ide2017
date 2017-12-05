@@ -20,15 +20,11 @@
 <section>
     <h2>Question 1:</h2>
     <h3><a href="copenhagen.html"> Here is the first type of visualization </a></h3>
-    <p>Source links and the citations: </p>
-    <ol>
-        <li>dsa</li>
-    </ol>
+    <p>Source links and the citation:
+    <a href="http://www.frankcleary.com/making-an-interactive-line-graph-with-d3-js/">line graph</a></p>
+
     <h3><a href="Povilas_heatmap/index.html"> Here is the second type of visualization </a> </h3>
-    <p>Source links and the citations: </p>
-    <ol>
-        <li>dsa</li>
-    </ol>
+
 </section>
 
 <section>
@@ -83,14 +79,17 @@
 <section>
     <h2>Question 3:</h2>
     <ol>
-        <li> <b>Yifang:</b> The data set we used is based on countries. However, global warming is on a global table, therefore I would use the temperature of the oceans over around 100 years as our additional dataset. This is able to higher my confidence of
+        <li> <p><b>Yifang:</b> The data set we used is based on countries. However, global warming is on a global table, therefore I would use the temperature of the oceans over around 100 years as our additional dataset. This is able to higher my confidence of
              answering the main question because oceans actually occupy more area on earth than lands. With respect to the visualization, I would draw a linear line to represent the
         trend of the temperature over the years. If this linear line is growing then I would be confident to answer the question instead of
-        obersering by bare eyes like what we did. </li>
-        <li> <b> Xiaolan: </b> </li>
-        <li> <b>Povilas:</b> It is hard to answer what is reasonable but probably it is up to 5-10 megabytes. Obviously, the smaller it is - the better because every user will have to load everything. d3.js users in forums say that you can load 100mb or maybe even 1Gb files but that would be pushing the limits.
+            obersering by bare eyes like what we did.</p> </li>
+        <li> <p><b> Xiaolan: </b>We can make a bar graph with 12 bars. X axis denotes 12 months and y axis denotes temperature. For one city, as we have monly data over 100 years, besides add the listed detailed information as we do in part 1, we may construct a dynamic barplot like
+            <a href="https://www.aerisweather.com/blog/wp-content/uploads/2016/05/stormreports-example1.gif">this(the second one in second line)</a>,then we will have a directly knowledge about how weather changed over 100 years
+            because every bar will change as time goes to show the temperature data of 12 months seperately for "current" year. Thus for fixed month, we can see how its temperature changes over 100 years. We also can add a bar representing annual average temperature
+            for "current" year. By observing the dynamic effect of this bar, we can also get directly visiualization for how weather changes annually over 100 year. </p></li>
+        <li> <p><b>Povilas:</b> It is hard to answer what is reasonable but probably it is up to 5-10 megabytes. Obviously, the smaller it is - the better because every user will have to load everything. d3.js users in forums say that you can load 100mb or maybe even 1Gb files but that would be pushing the limits.
             E.g. One of our data files for this assignment was about 10-15kb, if we would like to create world map with switching temperatures based on years set years, we would need at least 1000-2000 locations, which would scales size to 20-30mb. Of course visualization itself wouldn't be very complicated, so that would be still reasonable if you have normal internet connections.
-            There are various methods to deal with big data sets: using Canvas instead of SVG/DOM could reduce complexity. CSV or TSV files are lighter than JSON. Well structured code, reusing functions and similar things can help slightly. Other thing is simply cropping your data, at some point it gets unreasonable to try showing every single point, it becomes a mess. Using libraries like Crossfilter helps as well.
+            There are various methods to deal with big data sets: using Canvas instead of SVG/DOM could reduce complexity. CSV or TSV files are lighter than JSON. Well structured code, reusing functions and similar things can help slightly. Other thing is simply cropping your data, at some point it gets unreasonable to try showing every single point, it becomes a mess. Using libraries like Crossfilter helps as well.</p></li>
             Yes, we didn't use all the points from every dataset, so cropping those would reduce size. </li>
     </ol>
 </section>
