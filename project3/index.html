@@ -6,7 +6,6 @@
     <title>Project 3</title>
 
     <style>
-
         .node {
             cursor: pointer;
         }
@@ -14,7 +13,7 @@
         .node circle {
             fill: #fff;
             stroke: steelblue;
-            stroke-width: 3px;
+            stroke-width: 2px;
         }
 
         .node text {
@@ -27,6 +26,15 @@
             stroke-width: 2px;
         }
 
+        .d3-tip {
+            line-height: 1;
+            font-weight: bold;
+            padding: 10px;
+            background: rgba(0, 0, 0, 0.8);
+            color: #fff;
+            border-radius: 1px;
+        }
+
     </style>
 
 </head>
@@ -35,6 +43,7 @@
 
 <!-- load the d3.js library -->
 <script src="http://d3js.org/d3.v3.min.js"></script>
+<script src="d3-tip.js"></script>
 
 <script>
 
@@ -45,62 +54,62 @@
             "children": [
                 {
                     "name": "Donald Trump Jr.",
-                    "parent": "Donald Trump & Ivana Trump",
+                    "parent": "Donald Trump and Ivana Trump",
                     "children": [
                         {
                             "name": "Kai Madison",
-                            "parent": "Donald Trump Jr. & Vanessa Trump"
+                            "parent": "Donald Trump Jr. and Vanessa Trump"
                         },
                         {
                             "name": "Donald III",
-                            "parent": "Donald Trump Jr. & Vanessa Trump"
+                            "parent": "Donald Trump Jr. and Vanessa Trump"
                         },
                         {
                             "name": "Chloe Sophia",
-                            "parent": "Donald Trump Jr. & Vanessa Trump"
+                            "parent": "Donald Trump Jr. and Vanessa Trump"
                         },
                         {
                             "name": "Tristan Milos",
-                            "parent": "Donald Trump Jr. & Vanessa Trump"
+                            "parent": "Donald Trump Jr. and Vanessa Trump"
                         },
                         {
                             "name": "Spencer Frederick",
-                            "parent": "Donald Trump Jr. & Vanessa Trump"
+                            "parent": "Donald Trump Jr. and Vanessa Trump"
                         }
 
                     ]
                 },
                 {
                     "name": "Ivanka Trump",
-                    "parent": "Donald Trump & Ivana Trump",
+                    "parent": "Donald Trump and Ivana Trump",
                     "children": [
                         {
                             "name": "Arabella Rose",
-                            "parent": "Ivanka Trump & Jared Kushner"
+                            "parent": "Ivanka Trump and Jared Kushner"
                         },
                         {
                             "name": "Joseph Frederick",
-                            "parent": "Ivanka Trump & Jared Kushner"
+                            "parent": "Ivanka Trump and Jared Kushner"
                         },
                         {
                             "name": "Theodore James",
-                            "parent": "Ivanka Trump & Jared Kushner"
+                            "parent": "Ivanka Trump and Jared Kushner"
                         }
                     ]
                 },
                 {
                     "name": "Eric Trump",
-                    "parent": "Donald Trump & Ivana Trump",
+                    "parent": "Donald Trump and Ivana Trump",
                     "children": null
                 },
                 {
                     "name": "Tiffany Trump",
-                    "parent": "Donald Trump & Marla Maples",
+                    "parent": "Donald Trump and Marla Maples",
                     "children": null
                 },
                 {
                     "name": "Baron Trump",
-                    "parent": "Donald Trump & Melanie Trump",
+                    "parent": "Donald Trump and Melanie Trump",
                     "children":null
                 }
             ]
@@ -151,11 +160,28 @@
         var node = svg.selectAll("g.node")
             .data(nodes, function(d) { return d.id || (d.id = ++i); });
 
+        console.log("nodes", nodes);
+        
+        var tip = d3.tip()
+            .attr('class', 'd3-tip')
+            .offset([120, 40])
+            .html(function (d) {
+                if (d.parent=="null"){
+                    return "parents: null";
+                } else {
+                    return "parents:" +  d.parent.name;
+                }
+            });
+
+        svg.call(tip);
+
         // Enter any new nodes at the parent's previous position.
         var nodeEnter = node.enter().append("g")
             .attr("class", "node")
             .attr("transform", function(d) { return "translate(" + source.y0 + "," + source.x0 + ")"; })
-            .on("click", click);
+            .on("click", click)
+            .on("mouseover", tip.show)
+            .on("mouseout", tip.hide);
 
         nodeEnter.append("circle")
             .attr("r", 1e-6)
