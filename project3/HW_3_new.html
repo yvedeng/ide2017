@@ -24,7 +24,6 @@
         }
         .d3-tip {
             line-height: 1;
-            font-weight: bold;
             padding: 10px;
             background: rgba(0, 0, 0, 0.8);
             color: #fff;
@@ -138,8 +137,8 @@
     ];
     // ************** Generate the tree diagram	 *****************
     var margin = {top: 20, right: 120, bottom: 20, left: 120},
-        width = 960 - margin.right - margin.left,
-        height = 500 - margin.top - margin.bottom;
+        width = 860 - margin.right - margin.left,
+        height = 860 - margin.top - margin.bottom;
     var i = 0,
         duration = 750,
         root;
@@ -157,13 +156,16 @@
     root.x0 = height / 2;
     root.y0 = 0;
     update(root);
-    d3.select(self.frameElement).style("height", "500px");
+    d3.select(self.frameElement).style("height", "400px");
     function update(source) {
         // Compute the new tree layout.
         var nodes = tree.nodes(root).reverse(),
             links = tree.links(nodes);
         // Normalize for fixed-depth.
-        nodes.forEach(function(d) { d.y = d.depth * 180;});
+        nodes.forEach(function(d) {
+            d.y = d.depth * 200;
+            d.x = d.x ;
+        });
         // Update the nodes…
         var node = svg.selectAll("g.node")
             .data(nodes, function(d) { return d.id || (d.id = ++i); });
@@ -174,9 +176,9 @@
             .offset([120, 40])
             .html(function (d) {
                 if (d.parents=="null"){
-                    return "Name:" +d.name + "<br/>"+"parents: null";
+                    return "Name: " +d.name + "<br/>"+"parents: null";
                 } else {
-                    return "Name:" +d.name + "<br/>"+"parents:" + d.parents;
+                    return "Name: " +d.name + "<br/>"+"parents: " + d.parents;
                 }
                 });
 
@@ -196,8 +198,8 @@
             .attr("xlink:href",  function(d) { return d.img;})
             .attr("x", function(d) { return -15;})
             .attr("y", function(d) { return -15;})
-            .attr("height", 30)
-            .attr("width", 30);
+            .attr("height", 50)
+            .attr("width", 50);
 
         nodeEnter.append("text")
             .attr("x", function(d) { return d.children || d._children ? -13 : 13; })
@@ -212,8 +214,8 @@
         nodeUpdate.select("circle")
             .attr("r", 10)
             .style("fill", function(d) { return d._children ? "lightsteelblue" : "#fff"; });
-        nodeUpdate.select("text")
-            .style("fill-opacity", 1);
+        // nodeUpdate.select("text")
+        //     .style("fill-opacity", 1);
         // Transition exiting nodes to the parent's new position.
         var nodeExit = node.exit().transition()
             .duration(duration)
