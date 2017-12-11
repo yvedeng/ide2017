@@ -3,90 +3,60 @@
 <head>
     <meta charset="UTF-8">
     <title>Project 3</title>
+    <script src="https://d3js.org/d3.v3.min.js"></script>
 </head>
 <body>
 <script>
-    var treeData = [
-        {
-            "name": "Donald Trump",
-            "partners": [
-                {
-                    "name": "Ivana Trump",
-                    "children": [
-                        {
-                            "name": "Donald Trump Jr.",
-                            "partners": [
-                                {
-                                    "name": "Vanessa Trump",
-                                    "children": [
-                                        {
-                                            "name": "Kai Madison"
-                                        },
-                                        {
-                                            "name": "Donald III"
-                                        },
-                                        {
-                                            "name": "Chloe Sophia"
-                                        },
-                                        {
-                                            "name": "Tristan Milos"
-                                        },
-                                        {
-                                            "name": "Spencer Frederick"
-                                        }
-                                    ]
-                                }
-                            ]
-                        },
-                        {
-                            "name": "Ivanka Trump",
-                            "partners": [
-                                {
-                                    "name": "Jared Kushner",
-                                    "children": [
-                                        {
-                                            "name": "Arabella Rose"
-                                        },
-                                        {
-                                            "name": "Joseph Frederick"
-                                        },
-                                        {
-                                            "name": "Theodore James"
-                                        }
-                                    ]
-                                }
-                            ]
-                        },
-                        {
-                            "name": "Eric Trump",
-                            "partners": [
-                                {
-                                    "name": "Lara Yunaska"
-                                }
-                            ]
-                        }
-                    ]
-                },
-                {
-                    "name": "Marla Maples",
-                    "children": [
-                        {
-                            "name": "Tiffany Trump"
-                        }
-                    ]
-                },
-                {
-                    "name": "Melanie Trump",
-                    "children": [
-                        {
-                            "name": "Baron Trump"
-                        }
-                    ]
-                }
-            ]
-        }
-    ];
-    
+    // ************** Generate the tree diagram	 *****************
+    var margin = {top: 20, right: 120, bottom: 20, left: 120},
+        width = 960 - margin.right - margin.left,
+        height = 500 - margin.top - margin.bottom;
+
+  var treeLayout = d3.layout.tree()
+      .size([width, height]);
+
+  d3.json("treeDemo.json", function (err, data) {
+      var nodes = treeLayout(data);
+      var links = treeLayout.links(nodes)
+
+      console.log("nodes", nodes);
+      console.log("links", links);
+
+      d3.select('svg g.tree')
+          .selectAll('line.link')
+          .data(links)
+          .enter('line')
+          .append('line.link')
+          // .classed('link', true)
+          .attr('x1', function(d){
+              d.source.x;
+          })
+          .attr('y1', function(d){
+              d.source.y;
+          })
+          .attr('x2', function (d) {
+              d.target.x;
+          })
+          .attr('y2', function (d) {
+              d.target.y;
+          })
+
+      d3.select('svg g.tree')
+          .selectAll('circle')
+          .data(nodes)
+          .enter()
+          .append('circle')
+          .attr('cx', function(d){
+              return d.x;
+          })
+          .attr('cy', function(d){
+              return d.y;
+          })
+          .attr('r', 3);
+      
+  });
+
 </script>
+
 </body>
 </html>
