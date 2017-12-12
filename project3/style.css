@@ -1,0 +1,31 @@
+.node {
+	cursor: pointer;
+}
+.node circle {
+	fill: #fff;
+	stroke: steelblue;
+	stroke-width: 2px;
+}
+
+.node text {
+	font: 12px sans-serif;
+}
+
+.link {
+	fill: none;
+	stroke: #ccc;
+	stroke-width: 2px;
+}
+
+.d3-tip {
+	line-height: 1;
+	padding: 10px;
+	background: rgba(0, 0, 0, 0.8);
+	color: #fff;
+	border-radius: 1px;
+}
+#mainbox{
+	margin: 0 auto;
+	width: 70%;
+	text-align: left;
+}
