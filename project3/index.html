@@ -15,28 +15,27 @@
     <h2>Part 1: Family Tree</h2>
     <div id="familytree"></div>
 
-    <p>We take the graph from google for each member of Trump family and set this graph ase our shape of node.
-        For the tree layout, we show the relationship between parents and children. For each node,
-        when moving mouse over this node, it shows the name and parents of the character denoted by this node.
-        And if we click this node and if it has children nodes, these children nodes will be folded. If click again,
-        it will be restored. </p >
+    <p>We took photo from google for each member of Trump family and set this photo as our shape of node.
+        For the tree layout, we show the relationship between parent and children. When mouse is hovering over the node,
+        it shows the name, both parents, current and previous spouses of the person denoted.
+        Nodes can be clicked, if it has children nodes, these children nodes will be folded or unfolded.</p >
 
     <h2>Part 2: Explanations </h2>
     <ol><li><b>Motivation</b></li>
         <p> We choose tree layout simply because we were asked to create a family tree. The reason we did not show the partner information
-            is that we do not want to mess up the relationship between parents and children as same as the tree structure. We have imagine
-            that if we add the partners part into our visualization : We set Donald as root and we have to set Donald's partners as the children
-            of this root. This will cause a problem for his children who have a partner, and his grandchildren node will be the children of his
-            son/daughter in law's node. This is a mess. Therefore to make everything clear, we decided to make it this way. </p>
+            is that we weren't able to successfully code it and we didn't want to mess up the relationship between parents and children using
+            same branches for both or do it manually (hardcoding nodes based on our data). Therefore to make everything clear, we decided to make it
+            simplier, following only Trump family tree and adding spouses to information box which is shown when hovering over the persons photo. </p>
         <p> The info box when the cursor move over the picture was created since we want to show as much as information as possible.</p>
-        <p> We decide to use their picture to illustrate their relationship because it looks nicer and friendlier comparing to the text.
+        <p> We decided to use their picture to illustrate their relationship because it looks nicer and friendlier comparing to the text. As well as
+            almost everyone have seen some pictures of Donald Trump children but very few know their names. That helps to relate to these people.</p>
 
 
         <li> <b>Suggest how/if the visualization could be improved by adding interactive elements</b> </li>
-        <p>When click each node, there may be able to show more information on the topleft corner of whole webpage, i.e. link to the
-            introduction for this member. Then we can know this person more by clicking the link.  </p>
-        <p>We can add the partner images out of the tree layout and show it in a nice way. </p>
+        <p>Information box could hold link to the Wiki page and a little bit more information, i.e. age.</p>
+        <p>Properly executing partnership branches</p>
         <p>Scaling images with the same size or format to make this visualization more elegant. </p>
+        <p>Plot itself could be scaling with size required to show all not hidden pictures</p>
 </div>
 </body>
 </html>
