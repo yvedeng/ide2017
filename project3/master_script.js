@@ -125,9 +125,9 @@ function init() {
         }
     ];
     // ************** Generate the tree diagram	 *****************
-    var margin = {top: 0, right: 60, bottom: 0, left: 60},
-        width = 720 - margin.right - margin.left,
-        height = 720 - margin.top - margin.bottom;
+    var margin = {top: 20, right: 30, bottom: 20, left: 30},
+        width = 1220 - margin.right - margin.left,
+        height = 520 - margin.top - margin.bottom;
     var i = 0,
         duration = 750,
         root;
@@ -135,7 +135,7 @@ function init() {
         .size([height, width]);
     var diagonal = d3.svg.diagonal()
         .projection(function (d) {
-            return [d.y, d.x];
+            return [d.x, d.y];
         });
     var svg = d3.select("#familytree").append("svg")
         .attr("width", width + margin.right + margin.left)
@@ -156,7 +156,7 @@ function init() {
         // Normalize for fixed-depth.
         nodes.forEach(function (d) {
             d.y = d.depth * 200;
-            d.x = d.x;
+            d.x = d.x * 2.5;
         });
         // Update the nodes…
         var node = svg.selectAll("g.node")
@@ -194,7 +194,7 @@ function init() {
         var nodeEnter = node.enter().append("g")
             .attr("class", "node")
             .attr("transform", function (d) {
-                return "translate(" + source.y0 + "," + source.x0 + ")";
+                return "translate(" + source.x0 + "," + source.y0 + ")";
             })
             .on("click", click)
             .on("mouseover", tip.show)
@@ -212,14 +212,14 @@ function init() {
             .attr("y", function (d) {
                 return -15;
             })
-            .attr("height", 50)
-            .attr("width", 50);
+            .attr("height", 75)
+            .attr("width", 75);
 
         // Transition nodes to their new position.
         var nodeUpdate = node.transition()
             .duration(duration)
             .attr("transform", function (d) {
-                return "translate(" + d.y + "," + d.x + ")";
+                return "translate(" + d.x + "," + d.y + ")";
             });
         nodeUpdate.select("circle")
             .attr("r", 10)
@@ -232,7 +232,7 @@ function init() {
         var nodeExit = node.exit().transition()
             .duration(duration)
             .attr("transform", function (d) {
-                return "translate(" + source.y + "," + source.x + ")";
+                return "translate(" + source.x + "," + source.y + ")";
             })
             .remove();
         nodeExit.select("circle")
