@@ -172,19 +172,19 @@ function init() {
                 if (d.previousspouses == null) {
                     if (d.parents == null) {
                         if (d.partner == null) {
-                            return "Name: " + d.name + "<br/>" + "parents: no data";
+                            return "Name: " + d.name + "<br/>" + "Parents: no data";
                         } else {
-                            return "Name: " + d.name + "<br/>" + "parents: no data" + "<br/>" + "partner: " + d.partner;
+                            return "Name: " + d.name + "<br/>" + "Parents: no data" + "<br/>" + "Spouse: " + d.partner;
                         }
                     } else {
                         if (d.partner == null) {
-                            return "Name: " + d.name + "<br/>" + "parents: " + d.parents;
+                            return "Name: " + d.name + "<br/>" + "Parents: " + d.parents;
                         } else {
-                            return "Name: " + d.name + "<br/>" + "parents: " + d.parents + "<br/>" + "partner: " + d.partner;
+                            return "Name: " + d.name + "<br/>" + "Parents: " + d.parents + "<br/>" + "Spouse: " + d.partner;
                         }
                     }
                 } else {
-                    return "Name: " + d.name + "<br/>" + "parents: no data" + "<br/>" + "partner: " + d.partner + "<br/>" + "previous: " + d.previousspouses;
+                    return "Name: " + d.name + "<br/>" + "Parents: no data" + "<br/>" + "Spouse: " + d.partner + "<br/>" + "Previous: " + d.previousspouses;
                 }
             });
 
