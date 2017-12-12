@@ -167,7 +167,7 @@ function init() {
 
         var tip = d3.tip()
             .attr('class', 'd3-tip')
-            .offset([120, 40])
+            .offset([0, 20])
             .html(function (d) {
                 if (d.previousspouses == null) {
                     if (d.parents == null) {
