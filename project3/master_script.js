@@ -172,9 +172,9 @@ function init() {
                 if (d.previousspouses == null) {
                     if (d.parents == null) {
                         if (d.partner == null) {
-                            return "Name: " + d.name + "<br/>" + "Parents: no data";
+                            return "Name: " + d.name + "<br/>";
                         } else {
-                            return "Name: " + d.name + "<br/>" + "Parents: no data" + "<br/>" + "Spouse: " + d.partner;
+                            return "Name: " + d.name + "<br/>" + "Spouse: " + d.partner;
                         }
                     } else {
                         if (d.partner == null) {
@@ -184,7 +184,7 @@ function init() {
                         }
                     }
                 } else {
-                    return "Name: " + d.name + "<br/>" + "Parents: no data" + "<br/>" + "Spouse: " + d.partner + "<br/>" + "Previous: " + d.previousspouses;
+                    return "Name: " + d.name + "<br/>" + "Spouse: " + d.partner + "<br/>" + "Previous: " + d.previousspouses;
                 }
             });
 
