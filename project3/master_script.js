@@ -125,7 +125,7 @@ function init() {
         }
     ];
     // ************** Generate the tree diagram	 *****************
-    var margin = {top: 20, right: 30, bottom: 20, left: 30},
+    var margin = {top: 40, right: 30, bottom: 20, left: 30},
         width = 1220 - margin.right - margin.left,
         height = 520 - margin.top - margin.bottom;
     var i = 0,
@@ -207,10 +207,10 @@ function init() {
                 return d.img;
             })
             .attr("x", function (d) {
-                return -15;
+                return -37;
             })
             .attr("y", function (d) {
-                return -15;
+                return -37;
             })
             .attr("height", 75)
             .attr("width", 75);
