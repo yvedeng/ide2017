@@ -1,0 +1,11 @@
+#box{
+    margin: 0 auto;
+    width: 100%;
+    text-align: left;
+    overflow: hidden;
+}
+
+p{
+    font-family: 'Source Code Pro', sans-serif;
+    text-align: justify;
+}
