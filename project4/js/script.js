@@ -11,7 +11,6 @@ function init() {
     var padding = 30;
     var g = svg.append('g');
 
-
     function convertNumbers(row) {
         var r = {};
         for (var k in row) {
@@ -82,7 +81,8 @@ function init() {
                 .attr('r', radius)
                 .attr('fill', 'red')
                 .on('mouseover', handleMouseOver)
-                .on('mouseout', handleMouseOut);
+                .on('mouseout', handleMouseOut)
+                .on('click', handleClick);
 
             // Create Event Handlers for mouse
             function handleMouseOver(d, i) {  // Add interactivity
@@ -106,19 +106,17 @@ function init() {
                 document.getElementById("t" + d.feature1 + '-' + d.feature2 + '-' + i).remove()
             }
 
+            function handleClick(d, i){
+                svg.append('g')
+                    .transform()
+            }
+
             function round(value, decimals) {
                 return Number(Math.round(value+'e'+decimals)+'e-'+decimals);
             }
 
         }
 
-
-
     );
-
-
-
-
-
 }
 
