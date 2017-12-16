@@ -1,10 +1,27 @@
-#box{
-    margin: 0 auto;
-    width: 100%;
-    text-align: left;
-    overflow: hidden;
+
+html {
+    height:100%;
+    overflow:scroll; /* what happens if content overflows an elements box */
+}
+body {
+    height:100%;
+    overflow:scroll;
 }
 
+.axis path, .axis line{
+    fill: none;
+    stroke:blue;
+    stroke-width: 1;
+    shape-rendering: crispEdges;
+}
+
+svg {
+    width:80%;
+    height:100%;
+    position:absolute;
+    top:0px;
+    left:0px;
+}
 p{
     font-family: 'Source Code Pro', sans-serif;
     text-align: justify;
