@@ -14,6 +14,12 @@ hands_pca = PCA().fit_transform(hands)
 if hands.shape[0]<hands.shape[1]:
     hands_pca = np.append(hands_pca, np.zeros( (hands.shape[0],hands.shape[1]-hands.shape[0])),axis=1)
 
+header = ""
+for i in range(hands_pca.shape[1]):
+    if i != hands_pca.shape[1]:
+        header = header + "feature" + str(i+1) + ','
+    else:
+        header = header + "feature" + str(i+1)
 # Store PCA
-np.savetxt('hands_pca.csv',hands_pca,fmt="%11.8f", delimiter=',')
+np.savetxt('hands_pca.csv',hands_pca,fmt="%11.8f", delimiter=',', header=header)
 
