@@ -9,6 +9,7 @@ function init() {
     var height = +svg.node().getBoundingClientRect().height - margin.top - margin.bottom;
     var radius = 3;
     var padding = 30;
+
     var g = svg.append('g');
 
     function convertNumbers(row) {
@@ -59,9 +60,7 @@ function init() {
                 .attr('transform', 'rotate(-90)')
                 .attr("x", -padding - margin.top - 10)
                 .attr("y", (width - padding) / 2)
-                // .attr('transform', "translate(" + (width-padding) + "," + (height/2) + ")")
                 .text("Component 2");
-
 
             // Create circles
             g.selectAll('circle')
@@ -106,59 +105,80 @@ function init() {
                 document.getElementById("t" + d.feature1 + '-' + d.feature2 + '-' + i).remove()
             }
 
-            var outline = d3.select('body')
+            var outline = d3.select('#hand')
                 .append('svg')
-                .attr('transform', 'translate (0,' + (svg.node().getBoundingClientRect().height + margin.top) + ')');
+                .attr('id', 'svg2');
 
             var g2 = outline.append('g');
 
-
-
             function handleClick(d, i) {
+
+                g2.selectAll("*").remove();
+
                 d3.csv('source/hands.csv', convertNumbers,
                     function (error, data){
                         if (error) throw error;
-                        console.log('handData', data);
                         var point = data[i];
-                        console.log('data[i]', Object.values(point).slice(0, 56));
 
+                        var xData = Object.values(point).slice(0, 56);
+                        var yData = Object.values(point).slice(56, 112);
+
+                        point = makeMatrix(xData, yData);
+
+                        // Create scales
                         var x = d3.scaleLinear()
-                            .domain([d3.min(Object.values(point).slice(0, 56)), d3.max(Object.values(point).slice(0, 56))])
-                            .range([padding, width-padding]);
+                            .domain(d3.extent(point,
+                                function(d){
+                                    return d[0];
+                                }))
+                            .range([0,width]);
 
+                        //d3.extent(array, callback) returns the minimum and maximum of the array
+                        //callback = array.map(callback)
                         var y = d3.scaleLinear()
-                            .domain([d3.min(Object.values(point).slice(56, 112)), d3.max(Object.values(point).slice(56, 112))])
-                            .range([[padding, height - padding]]);
+                            .domain(d3.extent(point,
+                                function(d){
+                                    return d[1];
+                                }))
+                            .range([0,height]);
 
-                        console.log('x(point)', x(point));
+                        // Create line generator
+                        var line = d3.line()
+                            .x(function(d){return x(d[0])})
+                            .y(function(d){return y(d[1])})
+                            .curve(d3.curveStep);
+
+
+                        // Create actual path element
+                        g2.append('path')
+                            .attr('d', line(point))
+                            .attr("stroke", "blue")
+                            .attr("stroke-width", 1)
+                            .attr("fill", 'none');
+
+
+                        // For reference, add points as well
+                        g2.selectAll('circle')
+                            .data(point)
+                            .enter()
+                            .append('circle')
+                            .attr('cx',function(d){return x(d[0])})
+                            .attr('cy', function(d){return y(d[1])})
+                            .attr('r', '2px')
+                            .attr('fill', 'steelblue')
                     });
-
-
-
-
-
-
-
-                //
-
-                //
-                // g2.selectAll('circle')
-                //     .data(point)
-                //     .enter()
-                //     .append('circle')
-                //     .attr('cx', function () {
-                //         return x(data) + "px";
-                //     })
-                //     .attr('cy', function () {
-                //         return y(data) + "px";
-                //     })
-                //     .attr('r', '3px')
-                //     .attr('fill', 'red')
                 };
-
 
             function round(value, decimals) {
                 return Number(Math.round(value + 'e' + decimals) + 'e-' + decimals);
+            }
+
+            function makeMatrix(x, y){
+                var newData = [];
+                for (var i=0; i<x.length; i++){
+                    newData = newData.concat([[x[i], y[i]]]);
+                }
+                return newData;
             }
         }
 

@@ -15,13 +15,39 @@ body {
     shape-rendering: crispEdges;
 }
 
-svg {
+#svg1 {
     width:700px;
     height:700px;
-    border: black;
-    border-width:2px;
     position:relative;
     overflow: scroll;
+}
+#svg2 {
+    width:700px;
+    height:700px;
+    position:relative;
+    overflow: scroll;
+}
+
+#plot{
+    position: relative;
+    width: 100%;
+    height:700px;
+    float:left;
+}
+#pca{
+    width:50%;
+    height:700px;
+    float:right;
+}
+#hand{
+    width:50%;
+    height:700px;
+    float:left;
+}
+
+g{
+    width: 50%;
+    height: 100%;
 }
 
 p{
