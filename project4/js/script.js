@@ -123,20 +123,11 @@ function init() {
                         console.log('data[i]', Object.values(point).slice(0, 56));
 
                         var x = d3.scaleLinear()
-                            .domain(d3.extent(point, function(f, d){
-                                if (d<56){
-                                    console.log(f);
-                                    return f;
-                                }
-                            }))
+                            .domain([d3.min(Object.values(point).slice(0, 56)), d3.max(Object.values(point).slice(0, 56))])
                             .range([padding, width-padding]);
 
                         var y = d3.scaleLinear()
-                            .domain(d3.extent(point, function(f, d){
-                                if (56 < d && d < 112){
-                                    return f;
-                                }
-                            }))
+                            .domain([d3.min(Object.values(point).slice(56, 112)), d3.max(Object.values(point).slice(56, 112))])
                             .range([[padding, height - padding]]);
 
                         console.log('x(point)', x(point));
