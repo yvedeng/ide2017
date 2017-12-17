@@ -16,12 +16,14 @@ body {
 }
 
 svg {
-    width:80%;
-    height:100%;
-    position:absolute;
-    top:0px;
-    left:0px;
+    width:700px;
+    height:700px;
+    border: black;
+    border-width:2px;
+    position:relative;
+    overflow: scroll;
 }
+
 p{
     font-family: 'Source Code Pro', sans-serif;
     text-align: justify;
