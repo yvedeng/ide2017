@@ -58,7 +58,7 @@ function init() {
 
             g.append("text")
                 .attr('transform', 'rotate(-90)')
-                .attr("x", -padding - margin.top - 10)
+                .attr("x", -padding - margin.top - 20)
                 .attr("y", (width - padding) / 2)
                 .text("Component 2");
 
