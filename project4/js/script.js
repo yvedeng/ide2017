@@ -146,7 +146,7 @@ function init() {
                         var line = d3.line()
                             .x(function(d){return x(d[0])})
                             .y(function(d){return y(d[1])})
-                            .curve(d3.curveStep);
+                            .curve(d3.curveCatmullRom);
 
 
                         // Create actual path element
