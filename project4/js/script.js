@@ -58,7 +58,7 @@ function init() {
 
             g.append("text")
                 .attr('transform', 'rotate(-90)')
-                .attr("x", -padding - margin.top - 20)
+                .attr("x", -padding - margin.top - 40)
                 .attr("y", (width - padding) / 2)
                 .text("Component 2");
 
@@ -67,6 +67,9 @@ function init() {
                 .data(csvdata)
                 .enter()
                 .append('circle')
+                .attr('class', function (d, i) {
+                    return "pcac"+(i+1);
+                })
                 .attr('cx', function (d) {
                     return xScale(d.feature1) + "px";
                 })
@@ -109,7 +112,8 @@ function init() {
                 .append('svg')
                 .attr('id', 'svg2');
 
-            var g2 = outline.append('g');
+            var g2 = outline.append('g')
+                .attr('transform', "translate(" + 0 + "," + 30 + ")");
 
             function handleClick(d, i) {
 
@@ -152,6 +156,7 @@ function init() {
                         // Create actual path element
                         g2.append('path')
                             .attr('d', line(point))
+                            .attr('class','handp'+ i)
                             .attr("stroke", "blue")
                             .attr("stroke-width", 1)
                             .attr("fill", 'none');
@@ -162,6 +167,7 @@ function init() {
                             .data(point)
                             .enter()
                             .append('circle')
+                            .attr('class','handc'+ (i+1))
                             .attr('cx',function(d){return x(d[0])})
                             .attr('cy', function(d){return y(d[1])})
                             .attr('r', '2px')
