@@ -12,82 +12,99 @@
 
 <div>
     <h1>Project 4</h1>
-    <p>This is a font test.</p>
+
+    <h1>Introduction</h1>
+
+    <p>Genreally, Principal Component Analysis is a statistical method to simplify and analyze data. It can reduce the dimension of data and keep main features that contributes to data mostly.
+        The “principal components” are a linear combination of the original variables sorted by the variance,
+        where the first principal component has the largest variance.You can also read more about PCA <a href="https://en.wikipedia.org/wiki/Principal_component_analysis">here</a></p>
+
+    <p>We use <font color="#4682b4">hands.csv</font> containing 112 dimensions and 40 points to build following interactive visualisation.
+        This high dimensional data set contains information about the outline of a hand. Here we use <font color="#4682b4">handPCA.py</font> to
+        reduce the dimensionality and allow for analysis. In the end, we have first two principle components. We plot first principle component,
+        which contains the information with the most variance, against the second principle component, which contains second highest variance.
+        By clicking the plotted points on the right side, the graph on the left will update with the corresponding outline of hand.
+        By hovering over the plotted points on the right side, its row index in data file and position will be showed.
+        By hovering over the outliers mentioned by following disicussion, the corresponding point will turn blue.
+    </p>
 </div>
 
 <div id="plot">
-    <div id="pca">
+    <div id="selectbox" align="right">
+        <select id="list" onchange="getSelectValue();">
+            <option selected="selected" value="d.feature1">PCR1</option>
+            <option value="d.feature2">PCR2</option>
+            <option value="d.feature3">PCR3</option>
+            <option value="d.feature4">PCR4</option>
+            <option value="d.feature5">PCR5</option>
+            <option value="d.feature6">PCR6</option>
+            <option value="d.feature7">PCR7</option>
+            <option value="d.feature8">PCR8</option>
+            <option value="d.feature9">PCR9</option>
+            <option value="d.feature10">PCR10</option>
+            <option value="d.feature11">PCR11</option>
+            <option value="d.feature12">PCR12</option>
+            <option value="d.feature13">PCR13</option>
+            <option value="d.feature14">PCR14</option>
+            <option value="d.feature15">PCR15</option>
+        </select>
+        <select id="list2" onchange="getSelectValue();">
+            <option value="d.feature1">PCR1</option>
+            <option selected="selected" value="d.feature2">PCR2</option>
+            <option value="d.feature3">PCR3</option>
+            <option value="d.feature4">PCR4</option>
+            <option value="d.feature5">PCR5</option>
+            <option value="d.feature6">PCR6</option>
+            <option value="d.feature7">PCR7</option>
+            <option value="d.feature8">PCR8</option>
+            <option value="d.feature9">PCR9</option>
+            <option value="d.feature10">PCR10</option>
+            <option value="d.feature11">PCR11</option>
+            <option value="d.feature12">PCR12</option>
+            <option value="d.feature13">PCR13</option>
+            <option value="d.feature14">PCR14</option>
+            <option value="d.feature15">PCR15</option>
+        </select>
+    </div>
+
+
+<div id="pca">
         <script src="js/script.js"></script>
     </div>
-
-    <div id="hand">
-    </div>
+    <div id="hand"></div>
 </div>
-
-<div id="selectbox" align="right">
-    <select id="list" onchange="getSelectValue();">
-        <option selected="selected" value="d.feature1">PCR1</option>
-        <option value="d.feature2">PCR2</option>
-        <option value="d.feature3">PCR3</option>
-        <option value="d.feature4">PCR4</option>
-        <option value="d.feature5">PCR5</option>
-        <option value="d.feature6">PCR6</option>
-        <option value="d.feature7">PCR7</option>
-        <option value="d.feature8">PCR8</option>
-        <option value="d.feature9">PCR9</option>
-        <option value="d.feature10">PCR10</option>
-        <option value="d.feature11">PCR11</option>
-        <option value="d.feature12">PCR12</option>
-        <option value="d.feature13">PCR13</option>
-        <option value="d.feature14">PCR14</option>
-        <option value="d.feature15">PCR15</option>
-    </select>
-    <select id="list2" onchange="getSelectValue();">
-        <option value="d.feature1">PCR1</option>
-        <option selected="selected" value="d.feature2">PCR2</option>
-        <option value="d.feature3">PCR3</option>
-        <option value="d.feature4">PCR4</option>
-        <option value="d.feature5">PCR5</option>
-        <option value="d.feature6">PCR6</option>
-        <option value="d.feature7">PCR7</option>
-        <option value="d.feature8">PCR8</option>
-        <option value="d.feature9">PCR9</option>
-        <option value="d.feature10">PCR10</option>
-        <option value="d.feature11">PCR11</option>
-        <option value="d.feature12">PCR12</option>
-        <option value="d.feature13">PCR13</option>
-        <option value="d.feature14">PCR14</option>
-        <option value="d.feature15">PCR15</option>
-    </select>
-</div>
-
-<h1>Introduction</h1>
-<p>Genreally, Principal Component Analysis is a statistical method to simplify and analyze data. It can reduce the dimension of data and keep main features that contributes to data mostly.
-    The “principal components” are a linear combination of the original variables sorted by the variance,
-    where the first principal component has the largest variance.You can also read more about PCA <a href="https://en.wikipedia.org/wiki/Principal_component_analysis">here</a></p>
-
-
-<p>We use <font color="#4682b4">hands.csv</font> containing 112 dimensions and 40 points to build following interactive visualisation.
-    This high dimensional data set contains information about the outline of a hand. Here we use <font color="#4682b4">handPCA.py</font> to
-    reduce the dimensionality and allow for analysis. In the end, we have first two principle components. We plot first principle component,
-    which contains the information with the most variance, against the second PC, which contains second highest variance.
-
-    By clicking the plotted points on the right side, the graph on the left will update with the corresponding outline of hand.
-
-    By hovering over the plotted points on the right side, its row index in data file and position will be showed.
-
-    By hovering over the outliers mentioned by following disicussion, the corresponding point will turn blue.
 
 <h1>Discussion:</h1>
 <p>For instance, when comparing the PC1 against PC2 we can get an overview of which feature correspond (is linked) to each one.
 If we take a look on one of the outliers, such as the <font id="outlier38" color="#ff7f50">outlier 38</font> and <font id="outlier40" color="#ff7f50">outlier 40</font>
 it can be seen when is compared to others that the PC1 contains the information about the distance between the thumb and the little finger and the PC2 contains the information
-    related to distance between the little and the ring finger.</p>
+    related to distance between the little and the ring finger.
 
+<h1>Individual part:</h1>
+<ul>
+    <li>
+        <p>Display the datafile row index as a text-label or a tooltip when the mouse hovers over its point in the PCA panel <sup><a href="#fn1">[1]</a></sup>. </p>
+    </li>
+    <li>
+        <p>Connect a piece of text in the discussion with the visualization. For example, when the mouse hovers over the discussion about an outlier, then the outlier gets highlighed in the visualization <sup><a href="#fn2" id="r2">[2]</a></sup>.</p>
+    </li>
+    <li>
+        <p>Support changing which two PCA-variables are displayed in panel two (preferably with a nice transition) <sup><a href="#fn3">[3]</a></sup>.</p>
+    </li>
+    <!--<li>-->
+        <!--<p>Display multiple hand-outlines and highlight the corresponding PCA-coordinates when one is selected.</p>-->
+    <!--</li>-->
+    <!--<li>-->
+        <!--<p>Add coloring based on clustering (use e.g. clusterfck)</p>-->
+    <!--</li>-->
+    <!--<li>-->
+        <!--<p>Support rectangular selections in the PCA-panel (this would require one of your groupmates to implement multiple displayed outlines in the hand-panel).</p>-->
+    <!--</li>-->
+</ul>
 
-
-
-
+<p id="fn1"><a href="#r1">[1]</a> Yifang
+<p id="fn2"><a href="#r2">[2]</a> Xiaolan
+<p id="fn3"><a href="#r3">[3]</a> Povilas
 
 
 </body>
