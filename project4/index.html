@@ -25,19 +25,33 @@
 </div>
 </div>
 
-<script>
-    function highlight(){
-        var ol = document.getElementsByClassName("pcac40");
-        console.log('outlier', ol);
-        lo.style.color='black'
-    }
-</script>
+<h1>Introduction</h1>
+<p>Genreally, Principal Component Analysis is a statistical method to simplify and analyze data. It can reduce the dimension of data and keep main features that contributes to data mostly.
+    The “principal components” are a linear combination of the original variables sorted by the variance,
+    where the first principal component has the largest variance.You can also read more about PCA <a href="https://en.wikipedia.org/wiki/Principal_component_analysis">here</a></p>
 
 
-Discussion:
-<div onmouseover="highlight()">
-    <p>outlier</p>
-</div>.
+<p>We use <font color="#4682b4">hands.csv</font> containing 112 dimensions and 40 points to build following interactive visualisation.
+    This high dimensional data set contains information about the outline of a hand. Here we use <font color="#4682b4">handPCA.py</font> to
+    reduce the dimensionality and allow for analysis. In the end, we have first two principle components. We plot first principle component,
+    which contains the information with the most variance, against the second PC, which contains second highest variance.
+
+    By clicking the plotted points on the right side, the graph on the left will update with the corresponding outline of hand.
+
+    By hovering over the plotted points on the right side, its row index in data file and position will be showed.
+
+    By hovering over the outliers mentioned by following disicussion, the corresponding point will turn blue.
+
+<h1>Discussion:</h1>
+<p>For instance, when comparing the PC1 against PC2 we can get an overview of which feature correspond (is linked) to each one.
+If we take a look on one of the outliers, such as the <font id="outlier38" color="#ff7f50">outlier 38</font> and <font id="outlier40" color="#ff7f50">outlier 40</font>
+it can be seen when is compared to others that the PC1 contains the information about the distance between the thumb and the little finger and the PC2 contains the information
+    related to distance between the little and the ring finger.</p>
+
+
+
+
+
 
 
 </body>
