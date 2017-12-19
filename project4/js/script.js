@@ -82,6 +82,27 @@ function init() {
                 .on('mouseout', handleMouseOut)
                 .on('click', handleClick);
 
+            //highlight circle when mouse over the discussion for this outlier
+            d3.select('#outlier38')
+                .on("mouseover",
+                    function(d, i) {
+                        d3.select(".pcac38")
+                            .attr("fill", "blue")})
+                .on("mouseout",
+                    function(d, i) {
+                        d3.select(".pcac38")
+                            .attr("fill", "red")});
+
+            d3.select('#outlier40')
+                .on("mouseover",
+                    function(d, i) {
+                        d3.select(".pcac40")
+                        .attr("fill", "blue")})
+                .on("mouseout",
+                    function(d, i) {
+                         d3.select(".pcac40")
+                        .attr("fill", "red")});
+
             // Create Event Handlers for mouse
             function handleMouseOver(d, i) {  // Add interactivity
                 // Use D3 to select element, change color and size
