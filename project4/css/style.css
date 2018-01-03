@@ -1,10 +1,12 @@
 
 html {
     height:100%;
+    width:90%;
     overflow:scroll; /* what happens if content overflows an elements box */
 }
 body {
     height:100%;
+    text-align:justify;
     overflow:scroll;
 }
 

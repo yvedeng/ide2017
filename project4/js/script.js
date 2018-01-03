@@ -134,7 +134,7 @@ function init() {
                 .attr('id', 'svg2');
 
             var g2 = outline.append('g')
-                .attr('transform', "translate(" + 0 + "," + 30 + ")");
+                .attr('transform', "translate(" + 10 + "," + 30 + ")");
 
             function handleClick(d, i) {
 
@@ -346,7 +346,7 @@ function updateValues(feature1, feature2)
                 .attr('id', 'svg2');
 
             var g2 = outline.append('g')
-                .attr('transform', "translate(" + 0 + "," + 30 + ")");
+                .attr('transform', "translate(" + 10 + "," + 30 + ")");
 
             function handleClick(d, i) {
 
