@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <title>Project 5: Crime rate in SF</title>
+  
+  <link rel="stylesheet" href="css/stylesheet.css">
+  <link rel="stylesheet" href="css/skeleton.css">
+
+  <script src="js/d3.min.js" charset="utf-8"></script>
+  <script src="js/d3.geo.tile.v0.min.js"></script>
+
+</head>
+
+<body>
+<div class="container">
+  <div class="row">
+    <h1>Project 4</h1>
+    <h2>Introduction</h2>
+	<p>The dataset is 10.000 randomly sampled and geocoded crime incidents in the city of San Francisco. It can be downloaded <a href=https://wouterboomsma.github.io/ide2017/assignments/assignment5/sf_crime.geojson>here</a>. It is made by the teacher, we only changed "\/" to "/" in crime category.</p>
+	<p>We used <a href=http://thfield.github.io/sf-census/>this</a> as an example to make map layout. Later it helped to analyze our results</p>
+	<p>We decided to make a San Francisco (SF) map with marked locations of crimes based on their longitude and latitude coordinates. We added few interactive elements that would help to analyze data for the user: mouse over shows more data about crime, there is a filter based on type of crime, police department district, year and week day. Total number of crimes updates based on your filters.</p>
+  </div>
+</div>
+<div class="container">
+  <div class="row">
+	<div id="map_container" class="eight columns chart-container"> 
+	</div>
+  </div>
+</div>
+<script src="js/app.js" charset="utf-8"></script>
+
+<div id="selectbox">
+    Type of Crime
+	<select id="list_crimes" onchange="getSelectValue();">
+        <option selected="selected" value="All">All</option>
+		<option value="BURGLARY">BURGLARY</option>
+        <option value="LARCENY/THEFT">LARCENY/THEFT</option>
+        <option value="VEHICLE THEFT">VEHICLE THEFT</option>
+        <option value="ASSAULT">ASSAULT</option>
+        <option value="WARRANTS">WARRANTS</option>
+        <option value="NON-CRIMINAL">NON-CRIMINAL</option>
+        <option value="VANDALISM">VANDALISM</option>
+        <option value="SUSPICIOUS OCC">SUSPICIOUS OCC</option>
+        <option value="DRUG/NARCOTIC">DRUG/NARCOTIC</option>
+        <option value="MISSING PERSON">MISSING PERSON</option>
+        <option value="FRAUD">FRAUD</option>
+        <option value="DRUNKENNESS">DRUNKENNESS</option>
+        <option value="TRESPASS">TRESPASS</option>
+        <option value="PROSTITUTION">PROSTITUTION</option>
+        <option value="ARSON">ARSON</option>
+        <option value="RUNAWAY">RUNAWAY</option>
+        <option value="RECOVERED VEHICLE">RECOVERED VEHICLE</option>
+        <option value="ROBBERY">ROBBERY</option>
+        <option value="FORGERY/COUNTERFEITING">FORGERY/COUNTERFEITING</option>
+        <option value="SUICIDE">SUICIDE</option>
+        <option value="DISORDERLY CONDUCT">DISORDERLY CONDUCT</option>
+        <option value="SECONDARY CODES">SECONDARY CODES</option>
+        <option value="EXTORTION">EXTORTION</option>
+        <option value="STOLEN PROPERTY">STOLEN PROPERTY</option>
+        <option value="WEAPON LAWS">WEAPON LAWS</option>
+        <option value="SEX OFFENSES FORCIBLE">SEX OFFENSES FORCIBLE</option>		
+		<option value="SEX OFFENSES NON FORCIBLE">SEX OFFENSES NON FORCIBLE</option>
+        <option value="DRIVING UNDER THE INFLUENCE">DRIVING UNDER THE INFLUENCE</option>
+        <option value="KIDNAPPING">KIDNAPPING</option>
+        <option value="EMBEZZLEMENT">EMBEZZLEMENT</option>
+        <option value="LIQUOR LAWS">LIQUOR LAWS</option>	
+        <option value="OTHER OFFENSES">OTHER OFFENSES</option>
+    </select>
+	</br>
+	</br>
+	District
+    <select id="list_district" onchange="getSelectValue();">
+        <option selected="selected" value="All">All</option>
+        <option value="INGLESIDE">Ingleside</option>
+        <option value="BAYVIEW">Bayview</option>
+        <option value="SOUTHERN">Southern</option>
+        <option value="MISSION">Mission</option>
+        <option value="TENDERLOIN">Tenderloin</option>
+        <option value="NORTHERN">Northern</option>
+        <option value="CENTRAL">Central</option>
+        <option value="TARAVAL">Taraval</option>
+        <option value="PARK">Park</option>
+        <option value="RICHMOND">Richmond</option>
+    </select>
+	</br>
+	</br>
+	Year
+    <select id="list_year" onchange="getSelectValue();">
+        <option selected="selected" value="All">All</option>
+        <option value="2003">2003</option>
+        <option value="2004">2004</option>
+        <option value="2005">2005</option>
+        <option value="2006">2006</option>
+        <option value="2007">2007</option>
+        <option value="2008">2008</option>
+        <option value="2009">2009</option>
+        <option value="2010">2010</option>
+        <option value="2011">2011</option>
+        <option value="2012">2012</option>
+        <option value="2013">2013</option>
+        <option value="2014">2014</option>
+        <option value="2015">2015</option>
+	</select>
+	</br>
+	</br>
+	Week day
+    <select id="list_day" onchange="getSelectValue();">
+        <option selected="selected" value="All">All</option>
+        <option value="Monday">Monday</option>
+        <option value="Tuesday">Tuesday</option>
+        <option value="Wednesday">Wednesday</option>
+        <option value="Thursday">Thursday</option>
+        <option value="Friday">Friday</option>
+        <option value="Saturday">Saturday</option>
+        <option value="Sunday">Sunday</option>
+    </select>    
+</div>
+
+
+<div class="container">
+  <div class="row">
+    <div class="eleven columns about">
+		<h2>Discussion</h2>
+		<p>Overall data shows that there are way more crimes in north-east San Francisco (It is considered city center) and it cannot be related to higher population. <a href=http://thfield.github.io/sf-census/>Example</a> used for SF layout shows that population is just slightly more concentrated in northern east part compared to other parts of city.</p>
+		<p>When filtering every year you can see the increases of crimes in recent years. 2003-2011 averaged about 760-770 per year. In 2012-2014 there are 860-910 crimes per year. The data only includes few months of 2015. The question is whether it is sampling biased, increase in number of crimes or just increase in number of documented crimes.</p>
+		<p>You can make some interesting discoveries filtering by crime. e.g. Drugs/narcotics are concentrated in Southern, Tenderloin and Mission police department (pd) districts but there are random crime incidents in other districts. Prostitution has two concentrated points with very little incidents anywhere else. One point is Mission pd districts, another one is in the middle between Tenderoil, Central and Northern districts. Incidents of vandalism are divided between areas pretty evenly.</p>
+		<p>There are even more interesting discoveries you can make filtering the data.</p>
+    </div>
+  </div>
+</div>
+
+</body>
+
+</html>

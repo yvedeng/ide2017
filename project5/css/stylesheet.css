@@ -1,0 +1,30 @@
+/* general */
+  body {
+  	/* background: #000000; */
+  }
+  svg {
+    width: 100%;
+    height: 100%;
+  }
+  path {
+    fill: none;
+    stroke: #000;
+  }
+/* general */
+
+/* structure */
+  .map-container {
+    /*width: 650px;*/
+    /*height: 650px;*/
+    /*background-color: #e8e8e8;*/
+    display: inline-block;
+  }
+/* structure */
+
+
+/* osm road map */
+  .major_road { stroke: #444; }
+  .minor_road { stroke: #bbb; }
+  .highway { stroke: #111; stroke-width: 0.3px; }
+/* osm road map */
+
