@@ -13,7 +13,6 @@
     <script src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyC9IuCU6bYa2ojAUkDawnt68AlQ002g-qI"></script>
 
     <style>
-
         html, body, #map {
             width: 100%;
             height: 100%;
@@ -47,13 +46,13 @@
 <script>
     // Create the Google Map…
     var map = new google.maps.Map(d3.select("#map").node(), {
-        zoom: 14,
+        zoom: 13,
         center: new google.maps.LatLng(55.70347,12.5539577),
         mapTypeId: google.maps.MapTypeId.TERRAIN
     });
 
     // Load the station data. When the data comes back, create an overlay.
-    d3.json("data/output.geojson", function(error, data) {
+    d3.csv("data/listings.csv", function(error, data) {
         if (error) throw error;
 
         var overlay = new google.maps.OverlayView();
@@ -70,7 +69,7 @@
                     padding = 10;
 
                 var marker = layer.selectAll("svg")
-                    .data(d3.entries(data['features']))
+                    .data(d3.entries(data))
                     .each(transform) // update existing markers
                     .enter().append("svg")
                     .each(transform)
@@ -80,7 +79,9 @@
                 marker.append("circle")
                     .attr("r", 4)
                     .attr("cx", padding)
-                    .attr("cy", padding);
+                    .attr("cy", padding)
+                    .mouseover("roomtype", data.value.roomtype);
+
 
                 // // Add a label.
                 // marker.append("text")
@@ -91,12 +92,12 @@
 
                 function transform(d) {
                     //(longtitude, latitude)
-                    console.log('longtitude', d.value.geometry.coordinates)
-                    d = new google.maps.LatLng( d.value.geometry.coordinates[1],  d.value.geometry.coordinates[0]);
-                    d = projection.fromLatLngToDivPixel(d);
+                    console.log('longtitude', d.value.longitude)
+                    point = new google.maps.LatLng(d.value.latitude, d.value.longitude);
+                    point = projection.fromLatLngToDivPixel(point);
                     return d3.select(this)
-                        .style("left", (d.x - padding) + "px")
-                        .style("top", (d.y - padding) + "px");
+                        .style("left", (point.x - padding) + "px")
+                        .style("top", (point.y - padding) + "px");
                 }
             };
         };

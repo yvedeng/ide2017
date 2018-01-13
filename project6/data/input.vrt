@@ -1,8 +1,0 @@
-<OGRVRTDataSource>
-    <OGRVRTLayer name="listings">
-        <SrcDataSource>listings.csv</SrcDataSource>
-        <GeometryType>wkbPoint</GeometryType>
-        <LayerSRS>WGS84</LayerSRS>
-        <GeometryField encoding="PointFromColumns" x="longitude" y="latitude"/>
-    </OGRVRTLayer>
-</OGRVRTDataSource> 
