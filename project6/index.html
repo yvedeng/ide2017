@@ -1,6 +1,4 @@
 <! DOCTYPE html>
-<meta charset="utf-8">
-<meta name="viewport" content="initial-scale=1.0, user-scalable=no"/>
 <html>
 <head>
   	<script src="https://d3js.org/d3.v4.min.js" charset="utf-8"></script>
@@ -10,100 +8,10 @@
     <script src="https://rawgit.com/mrdoob/three.js/master/examples/js/renderers/CSS3DRenderer.js"></script>
     <!-- <script src="js/elements.js"></script> -->
     <!-- <link rel="stylesheet" href="css/sheet.css"> -->
-    <script src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyC9IuCU6bYa2ojAUkDawnt68AlQ002g-qI"></script>
 </head>
-<style>
-
-    html, body, #map {
-        width: 100%;
-        height: 100%;
-        margin: 0;
-        padding: 0;
-    }
-
-    .stations, .stations svg {
-        position: absolute;
-    }
-
-    .stations svg {
-        width: 60px;
-        height: 20px;
-        padding-right: 100px;
-        font: 10px sans-serif;
-    }
-
-    .stations circle {
-        fill: brown;
-        stroke: black;
-        stroke-width: 1.5px;
-    }
-
-</style>
 
 <body>
-<div id="map"></div>
-
-<script>
-    // Create the Google Map…
-    var map = new google.maps.Map(d3.select("#map").node(), {
-        zoom: 14,
-        center: new google.maps.LatLng(55.70347,12.5539577),
-        mapTypeId: google.maps.MapTypeId.TERRAIN
-    });
-
-    // Load the station data. When the data comes back, create an overlay.
-    d3.json("data/output.geojson", function(error, data) {
-        if (error) throw error;
-
-        var overlay = new google.maps.OverlayView();
-
-        // Add the container when the overlay is added to the map.
-        overlay.onAdd = function() {
-            var layer = d3.select(this.getPanes().overlayLayer).append("div")
-                .attr("class", "stations");
-
-            // Draw each marker as a separate SVG element.
-            // We could use a single SVG, but what size would it have?
-            overlay.draw = function() {
-                var projection = this.getProjection(),
-                    padding = 10;
-
-                var marker = layer.selectAll("svg")
-                    .data(d3.entries(data['features']))
-                    .each(transform) // update existing markers
-                    .enter().append("svg")
-                    .each(transform)
-                    .attr("class", "marker");
-
-                // Add a circle.
-                marker.append("circle")
-                    .attr("r", 4)
-                    .attr("cx", padding)
-                    .attr("cy", padding);
-
-                // // Add a label.
-                // marker.append("text")
-                //     .attr("x", padding + 7)
-                //     .attr("y", padding)
-                //     .attr("dy", ".31em")
-                //     .text(function(d) { return d.key; });
-
-                function transform(d) {
-                    //(longtitude, latitude)
-                    console.log('longtitude', d.value.geometry.coordinates)
-                    d = new google.maps.LatLng( d.value.geometry.coordinates[1],  d.value.geometry.coordinates[0]);
-                    d = projection.fromLatLngToDivPixel(d);
-                    return d3.select(this)
-                        .style("left", (d.x - padding) + "px")
-                        .style("top", (d.y - padding) + "px");
-                }
-            };
-        };
-
-        // Bind our overlay to the map…
-        overlay.setMap(map);
-    });
-
-</script>
 
 </body>
+
+</html>
