@@ -8,105 +8,40 @@
     <script src="https://d3js.org/d3-transition.v1.min.js"></script>
     <script src="https://rawgit.com/mrdoob/three.js/master/build/three.min.js"></script>
     <script src="https://rawgit.com/mrdoob/three.js/master/examples/js/renderers/CSS3DRenderer.js"></script>
-    <!-- <script src="js/elements.js"></script> -->
-    <!-- <link rel="stylesheet" href="css/sheet.css"> -->
     <script src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyC9IuCU6bYa2ojAUkDawnt68AlQ002g-qI"></script>
-
-    <style>
-        html, body, #map {
-            width: 100%;
-            height: 100%;
-            margin: 0;
-            padding: 0;
-        }
-
-        .stations, .stations svg {
-            position: absolute;
-        }
-
-        .stations svg {
-            width: 60px;
-            height: 20px;
-            padding-right: 100px;
-            font: 10px sans-serif;
-        }
-
-        .stations circle {
-            fill: brown;
-            stroke: black;
-            stroke-width: 1.5px;
-        }
-
-    </style>
+    <title>Airbnb at Copenhagen</title>
+    <!--Inner links-->
+    <script src="js/main.js"></script>
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/points.css">
+    <link rel="stylesheet" href="css/filter_list.css">
 </head>
 
 <body>
+
+<div class="airbnb">
+    <img src="img/airbnb_logo.png"/>
+</div>
+
+<nav class="nav_bar">
+    <ul class="nav_ul">
+        <li class="nav_li"><a href="#neighbour">Browsing</a></li>
+        <li class="nav_li"><a href="chooseRoom.html">Choose Your Room</a></li>
+        <li class="nav_li"><a href="#">Analysis</a></li>
+    </ul>
+</nav>
+
+<div>
+    <img src="img/copenhagen_main.jpg"/>
+</div>
+
+<div id="neighbour">
+    <input type="text" id="myNeighInput" placeholder="Search for neighbourhood.." title="Type in a name">
+    <ul id="myNeighList"></ul>
+</div>
+
 <div id="map"></div>
 
-<script>
-    // Create the Google Map…
-    var map = new google.maps.Map(d3.select("#map").node(), {
-        zoom: 13,
-        center: new google.maps.LatLng(55.70347,12.5539577),
-        mapTypeId: google.maps.MapTypeId.TERRAIN
-    });
-
-    // Load the station data. When the data comes back, create an overlay.
-    d3.csv("data/listings.csv", function(error, data) {
-        if (error) throw error;
-
-        var overlay = new google.maps.OverlayView();
-
-        // Add the container when the overlay is added to the map.
-        overlay.onAdd = function() {
-            var layer = d3.select(this.getPanes().overlayLayer).append("div")
-                .attr("class", "stations");
-
-            // Draw each marker as a separate SVG element.
-            // We could use a single SVG, but what size would it have?
-            overlay.draw = function() {
-                var projection = this.getProjection(),
-                    padding = 10;
-
-                var marker = layer.selectAll("svg")
-                    .data(d3.entries(data))
-                    .each(transform) // update existing markers
-                    .enter().append("svg")
-                    .each(transform)
-                    .attr("class", "marker");
-
-                // Add a circle.
-                marker.append("circle")
-                    .attr("r", 4)
-                    .attr("cx", padding)
-                    .attr("cy", padding)
-                    .mouseover("roomtype", data.value.roomtype);
-
-
-                // // Add a label.
-                // marker.append("text")
-                //     .attr("x", padding + 7)
-                //     .attr("y", padding)
-                //     .attr("dy", ".31em")
-                //     .text(function(d) { return d.key; });
-
-                function transform(d) {
-                    //(longtitude, latitude)
-                    console.log('longtitude', d.value.longitude)
-                    point = new google.maps.LatLng(d.value.latitude, d.value.longitude);
-                    point = projection.fromLatLngToDivPixel(point);
-                    return d3.select(this)
-                        .style("left", (point.x - padding) + "px")
-                        .style("top", (point.y - padding) + "px");
-                }
-            };
-        };
-
-        // Bind our overlay to the map…
-        overlay.setMap(map);
-    });
-
-</script>
 </body>
 
 </html>

@@ -1,0 +1,167 @@
+d3.select(window).on('load', init);
+
+function init() {
+
+    // Load the station data. When the data comes back, create an overlay.
+    d3.csv("data/listings.csv", function(error, data) {
+        if (error) throw error;
+
+        var neigh = data.map(function(value){
+            return value['neighbourhood'];
+        });
+
+        var neigh_list = from_arr_to_set(neigh);
+
+        d3.select('#myNeighInput')
+            .on("keyup",filterList);
+
+        d3.select('#myNeighList')
+            .selectAll('li')
+            .data(neigh_list)
+            .enter()
+            .append('li')
+            .append('a')
+            .attr('href', '#map')
+            .text(function (d) {
+                return d
+            })
+            .on('click', handleClick);
+        console.log('neigh list: ', neigh_list);
+
+        function handleClick(d){
+            console.log(d);
+            var new_data = [];
+            for (var i=0; i<data.length; i++){
+                if (data[i]['neighbourhood'] == d) {
+                    new_data.push(data[i]);
+                }else{
+                    continue;
+                }
+            }
+            console.log(new_data.length);
+
+            latitude_center = get_center(new_data, 'latitude');
+            console.log('la center', latitude_center)
+            longitude_center = get_center(new_data, 'longitude')
+            // Create the Google Map…
+            var map = new google.maps.Map(d3.select("#map").node(), {
+                zoom: 14,
+                center: new google.maps.LatLng(latitude_center, longitude_center),
+                mapTypeId: google.maps.MapTypeId.TERRAIN
+            });
+
+            var overlay = new google.maps.OverlayView();
+
+            // Add the container when the overlay is added to the map.
+            overlay.onAdd = function() {
+                var layer = d3.select(this.getPanes().overlayLayer).append("div")
+                    .attr("class", "stations");
+
+                // Draw each marker as a separate SVG element.
+                // We could use a single SVG, but what size would it have?
+                overlay.draw = function() {
+                    var projection = this.getProjection(),
+                        padding = 10;
+
+                    var marker = layer.selectAll("svg")
+                        .data(d3.entries(new_data))
+                        .each(transform) // update existing markers
+                        .enter().append("svg")
+                        .each(transform)
+                        .attr("class", "marker")
+                        .on("mouseover", handleMouseOver)
+                        .on("mouseout", handleMouseOut);
+
+                    // Add a circle.
+                    marker.append("circle")
+                        .attr("r", 4)
+                        .attr("cx", padding)
+                        .attr("cy", padding);
+
+                    // marker.append("text")
+                    //     .attr("x", padding + 7)
+                    //     .attr("y", padding)
+                    //     .attr("dy", ".31em")
+                    //     .text(function(d) { return d.key; });
+
+                    function transform(d) {
+                        point = new google.maps.LatLng(d.value.latitude, d.value.longitude);
+                        point = projection.fromLatLngToDivPixel(point);
+                        return d3.select(this)
+                            .style("left", (point.x - padding) + "px")
+                            .style("top", (point.y - padding) + "px");
+                    }
+                };
+            };
+
+            // Bind our overlay to the map…
+            overlay.setMap(map);
+        }
+
+
+        // Create Event Handlers for mouse
+        function handleMouseOver(d) {  // Add interactivity
+            // Use D3 to select element, change color and size
+            d3.select(this)
+                .attr('fill', 'pink')
+                .attr('r', radius * 2);
+
+            g.append('text')
+                .attr('id', d['id'])
+                .attr('x', function () {
+                    return d['latitude'];
+                })
+                .attr('y', function () {
+                    return d['longitude'];
+                })
+                .text("room type: " + d['roomtype']);
+        }
+
+
+    });
+}
+
+function handleMouseOut(d, i) {
+    // Use D3 to select element, change color back to normal
+    d3.select(this)
+        .attr('r', 6);
+    document.getElementById(d.value.id).remove()
+}
+
+// Create a filter list
+function filterList() {
+    var input, filter, ul, li, a, i;
+    input = document.getElementById("myNeighInput");
+    filter = input.value.toUpperCase();
+    ul = document.getElementById("myNeighList");
+    li = ul.getElementsByTagName("li");
+    for (i = 0; i < li.length; i++) {
+        a = li[i].getElementsByTagName("a")[0];
+        if (a.innerHTML.toUpperCase().indexOf(filter) > -1) {
+            li[i].style.display = "";
+        } else {
+            li[i].style.display = "none";
+
+        }
+    }
+}
+// help function
+function from_arr_to_set(myArray){
+    var a_set = [];
+    for (var i = 0; i < myArray.length; i++){
+        if(a_set.indexOf(myArray[i])>-1){
+            continue;
+        }else{
+            a_set.push(myArray[i]);
+        }
+    }
+    return a_set
+}
+
+function get_center(data, description){
+    var count = 0.0;
+    for (var i=0; i<data.length; i++){
+        count += parseFloat(data[i][description]);
+    }
+    return count/data.length;
+}
