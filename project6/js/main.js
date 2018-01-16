@@ -1,19 +1,19 @@
 d3.select(window).on('load', init);
 
-function init() {
+function init(){
 
     // Load the station data. When the data comes back, create an overlay.
     d3.csv("data/listings.csv", function(error, data) {
         if (error) throw error;
 
-        var neigh = data.map(function(value){
+        var neigh = data.map(function (value) {
             return value['neighbourhood'];
         });
 
         var neigh_list = from_arr_to_set(neigh);
 
         d3.select('#myNeighInput')
-            .on("keyup",filterList);
+            .on("keyup", filterList);
 
         d3.select('#myNeighList')
             .selectAll('li')
@@ -28,21 +28,28 @@ function init() {
             .on('click', handleClick);
         console.log('neigh list: ', neigh_list);
 
-        function handleClick(d){
+        function handleClick(d) {
             console.log(d);
             var new_data = [];
-            for (var i=0; i<data.length; i++){
+            for (var i = 0; i < data.length; i++) {
                 if (data[i]['neighbourhood'] == d) {
                     new_data.push(data[i]);
-                }else{
+                } else {
                     continue;
                 }
             }
-            console.log(new_data.length);
+
+            // "id" + d['id'] + '<br/>' +
+            // "name" + d["name"] + '<br/>' +
+            // "host_name" + d["host_name"] + "<br/>" +
+            // "room_type" + d["room_type"] + "<br/>" +
+            // "price" + d["price"] + "<br/>" +
+            // "minimum nights" + d["minimum_nights"] + "<br/>"
 
             latitude_center = get_center(new_data, 'latitude');
-            console.log('la center', latitude_center)
-            longitude_center = get_center(new_data, 'longitude')
+            longitude_center = get_center(new_data, 'longitude');
+
+
             // Create the Google Map…
             var map = new google.maps.Map(d3.select("#map").node(), {
                 zoom: 14,
@@ -50,16 +57,17 @@ function init() {
                 mapTypeId: google.maps.MapTypeId.TERRAIN
             });
 
+
             var overlay = new google.maps.OverlayView();
 
             // Add the container when the overlay is added to the map.
-            overlay.onAdd = function() {
+            overlay.onAdd = function () {
                 var layer = d3.select(this.getPanes().overlayLayer).append("div")
                     .attr("class", "stations");
 
                 // Draw each marker as a separate SVG element.
                 // We could use a single SVG, but what size would it have?
-                overlay.draw = function() {
+                overlay.draw = function () {
                     var projection = this.getProjection(),
                         padding = 10;
 
@@ -68,57 +76,73 @@ function init() {
                         .each(transform) // update existing markers
                         .enter().append("svg")
                         .each(transform)
-                        .attr("class", "marker")
-                        .on("mouseover", handleMouseOver)
-                        .on("mouseout", handleMouseOut);
+                        .attr("class", "marker");
 
+                    console.log(marker);
                     // Add a circle.
                     marker.append("circle")
-                        .attr("r", 4)
+                        .data(new_data)
+                        .attr("r", 4.5)
                         .attr("cx", padding)
-                        .attr("cy", padding);
+                        .attr("cy", padding)
+                        .attr("fill", handleColor)
+                        .attr("stroke", "black")
+                        .attr("stroke-width", "1.5px")
+                        .on("mouseover", handleMouseOver);
 
                     // marker.append("text")
                     //     .attr("x", padding + 7)
                     //     .attr("y", padding)
                     //     .attr("dy", ".31em")
-                    //     .text(function(d) { return d.key; });
+                    //     .text(function (d) {
+                    //         return d.key;
+                    //     });
+
+                    function handleColor(d){
+                        if (d['room_type'] == 'Private room'){
+                            return "brown"
+                        } if (d['room_type'] == 'Entire home/apt'){
+                            return "green"
+                        } else{
+                            return "yellow"
+                        }
+                    }
 
                     function transform(d) {
                         point = new google.maps.LatLng(d.value.latitude, d.value.longitude);
                         point = projection.fromLatLngToDivPixel(point);
                         return d3.select(this)
-                            .style("left", (point.x - padding) + "px")
-                            .style("top", (point.y - padding) + "px");
+                            .style("left", (point.x) + "px")
+                            .style("top", (point.y) + "px");
                     }
                 };
-            };
 
+            };
             // Bind our overlay to the map…
             overlay.setMap(map);
-        }
-
-
-        // Create Event Handlers for mouse
-        function handleMouseOver(d) {  // Add interactivity
-            // Use D3 to select element, change color and size
-            d3.select(this)
-                .attr('fill', 'pink')
-                .attr('r', radius * 2);
-
-            g.append('text')
-                .attr('id', d['id'])
-                .attr('x', function () {
-                    return d['latitude'];
-                })
-                .attr('y', function () {
-                    return d['longitude'];
-                })
-                .text("room type: " + d['roomtype']);
-        }
-
-
+        };
     });
+
+
+
+}
+
+// Create Event Handlers for mouse
+function handleMouseOver(d) {  // Add interactivity
+    // Use D3 to select element, change color and size
+    d3.select(this)
+        .attr('fill', 'pink')
+        .attr('r', 6);
+
+    g.append('text')
+        .attr('id', d['id'])
+        .attr('x', function () {
+            return d['latitude'];
+        })
+        .attr('y', function () {
+            return d['longitude'];
+        })
+        .text("room type: " + d['roomtype']);
 }
 
 function handleMouseOut(d, i) {

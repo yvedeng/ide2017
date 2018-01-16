@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Light Rail Stations Ranked by # of Boardings</title>
+    <script type="text/javascript" src="https://d3js.org/d3.v4.min.js"></script>
+    <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyC9IuCU6bYa2ojAUkDawnt68AlQ002g-qI"></script>
+    <!-- A little bit o' jQuery to handle the link styles -->
+    <script type="text/javascript">
+        $(function() {
+            $('#link_1').addClass('active');
+        });
+        $(function () {
+            $("#filter a").click(function (e) {
+                e.preventDefault();
+                $("#filter a").addClass("active").not(this).removeClass("active");
+            });
+        });
+    </script>
+    <style type="text/css">
+        html, body, #map {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+        .stations, .stations svg {
+            position: absolute;
+        }
+        .stations svg {
+            font: 10px sans-serif;
+            text-anchor: middle;
+        }
+        .stations circle {
+            stroke: black;
+            stroke-width: 1.5px;
+        }
+        svg.marker {width:60px; height:60px;}
+        #filter {font-family: sans-serif, arial; text-transform: uppercase; text-align: center;}
+        #filter p {display:inline-block; margin: 10px;}
+        #filter a {text-decoration: none; font-size: 12pt;}
+        #filter a:link { color:#9a9a9a; }
+        #filter a:visited { color:#9a9a9a;}
+        #filter a:hover { color:#21759B; }
+        .active { color: #333333 !important;}
+    </style>
+</head>
+<body>
+<div id="filter">
+    <p class="dataset-swap-original"><a href="#" id="link_1">boardings</a></p>
+    <p class="dataset-swap"><a href="#" id="link_2">exits</a></p>
+</div>
+<!-- D3 SVG container goes here -->
+<div id="map"></div>
+<script type="text/javascript">
+    //Adding a color scale that takes the domain of station boardings and outputs to a range of sequential colors
+    // var colorScale = d3.domain([50000,1000000]).range(['#FFFFB2', '#FED976', '#FEB24C', '#FD8D3C', '#FC4E2A', '#E31A1C', '#B10026']);
+    // Create the Google Map…
+    var map = new google.maps.Map(d3.select("#map").node(), {
+        zoom: 12,
+        center: new google.maps.LatLng(33.466179,-111.990000),
+        mapTypeId: google.maps.MapTypeId.ROADMAP
+    });
+    // Load the station data. When the data comes back, create an overlay.
+    d3.json("data/stations.json", function(data) {
+        var overlay = new google.maps.OverlayView();
+        // Add the container when the overlay is added to the map.
+        overlay.onAdd = function() {
+            var layer = d3.select(this.getPanes().overlayLayer).append("div")
+                .attr("class", "stations");
+            // Draw each marker as a separate SVG element.
+            // We could use a single SVG, but what size would it have?
+            overlay.draw = function() {
+                var projection = this.getProjection(),
+                    padding = 30;
+                var marker = layer.selectAll("svg")
+                    .data(d3.entries(data))
+                    .each(transform) // update existing markers
+                    .enter().append("svg:svg")
+                    .each(transform)
+                    .attr("class", "marker");
+                // Add a circle.
+                marker.append("svg:circle")
+                    .transition()
+                    .delay(1000)
+                    // Size circles as a function of # of boardings (3rd value in json key)
+                    .attr("r", function(d){
+                        return Math.sqrt(parseInt(d.value[3]) * 0.00045 + padding);
+                    })
+                    .attr("cx", padding)
+                    .attr("cy", padding)
+                    .style("fill", function(d) {
+                        //get data value
+                        var colorValue = d.value[3]
+                        if (colorValue) {
+                            return colorValue;
+                        } else {
+                            return "#ccc";
+                        }
+                    });
+                // Add a label.
+                marker.append("svg:text")
+                    .transition()
+                    .delay(1000)
+                    .attr("x", padding - 3)
+                    .attr("y", padding)
+                    .attr("dy", ".45em")
+                    .attr("dx", ".4em")
+                    .text(function(d) { return d.value[5]; });
+                function transform(d) {
+                    d = new google.maps.LatLng(d.value[1], d.value[0]);
+                    d = projection.fromLatLngToDivPixel(d);
+                    return d3.select(this)
+                        .style("left", (d.x - padding) + "px")
+                        .style("top", (d.y - padding) + "px");
+                }
+            };
+        };
+        // Bind our overlay to the map…
+        overlay.setMap(map);
+    });
+    //On click, change dataset
+    d3.select(".dataset-swap")
+        .on("click", function(){
+
+            // Load the station data and create an overlay just like the first time
+            d3.json("data/stations.json", function(data) {
+                var overlay = new google.maps.OverlayView();
+                // Add the container again when the overlay is added to the map.
+                overlay.onAdd = function() {
+                    var layer = d3.select(this.getPanes().overlayLayer).append("div")
+                        .attr("class", "stations");
+                    overlay.draw = function() {
+                        var projection = this.getProjection(),
+                            padding = 30;
+                        var marker = layer.selectAll("svg")
+                            .data(d3.entries(data))
+                            .each(transform)
+                            .enter().append("svg:svg")
+                            .each(transform)
+                            .attr("class", "marker");
+                        // Select all existing circles and update them
+                        d3.selectAll("circle")
+                        //Data must be called again locally to rebind
+                            .data(d3.entries(data))
+                            .transition()
+                            .attr("r", function(d){
+                                return Math.sqrt(parseInt(d.value[7]) * 0.00045 + padding);
+                            })
+                            .attr("cx", padding)
+                            .attr("cy", padding)
+                            .style("fill", function(d) {
+                                //get data value
+                                var colorValue = d.value[7]
+                                if (colorValue) {
+                                    return colorScale(colorValue);
+                                } else {
+                                    return "#ccc";
+                                }
+                            });
+                        // And then update the labels
+                        d3.selectAll("text")
+                            .transition()
+                            .attr("x", padding - 3)
+                            .attr("y", padding)
+                            .attr("dy", ".45em")
+                            .attr("dx", ".4em")
+                            .text(function(d) { return d.value[9]; });
+                        function transform(d) {
+                            d = new google.maps.LatLng(d.value[1], d.value[0]);
+                            d = projection.fromLatLngToDivPixel(d);
+                            return d3.select(this)
+                                .style("left", (d.x - padding) + "px")
+                                .style("top", (d.y - padding) + "px");
+                        }
+                    };
+                };
+                // rebind overlay to the map…
+                overlay.setMap(map);
+            });
+        });
+    //On click, change dataset
+    d3.select(".dataset-swap-original")
+        .on("click", function(){
+
+            // Load the station data and create an overlay just like the first time
+            d3.json("data/stations.json", function(data) {
+                var overlay = new google.maps.OverlayView();
+                // Add the container again when the overlay is added to the map.
+                overlay.onAdd = function() {
+                    var layer = d3.select(this.getPanes().overlayLayer).append("div")
+                        .attr("class", "stations");
+                    overlay.draw = function() {
+                        var projection = this.getProjection(),
+                            padding = 30;
+                        var marker = layer.selectAll("svg")
+                            .data(d3.entries(data))
+                            .each(transform)
+                            .enter().append("svg:svg")
+                            .each(transform)
+                            .attr("class", "marker");
+                        // Select all existing circles and update them
+                        d3.selectAll("circle")
+                        //Data must be called again locally to rebind
+                            .data(d3.entries(data))
+                            .transition()
+                            .attr("r", function(d){
+                                return Math.sqrt(parseInt(d.value[3]) * 0.00045 + padding);
+                            })
+                            .attr("cx", padding)
+                            .attr("cy", padding)
+                            .style("fill", function(d) {
+                                //get data value
+                                var colorValue = d.value[3]
+                                if (colorValue) {
+                                    return colorScale(colorValue);
+                                } else {
+                                    return "#ccc";
+                                }
+                            });
+                        // And then update the labels
+                        d3.selectAll("text")
+                            .transition()
+                            .attr("x", padding - 3)
+                            .attr("y", padding)
+                            .attr("dy", ".45em")
+                            .attr("dx", ".4em")
+                            .text(function(d) { return d.value[5]; });
+                        function transform(d) {
+                            d = new google.maps.LatLng(d.value[1], d.value[0]);
+                            d = projection.fromLatLngToDivPixel(d);
+                            return d3.select(this)
+                                .style("left", (d.x - padding) + "px")
+                                .style("top", (d.y - padding) + "px");
+                        }
+                    };
+                };
+                // rebind overlay to the map…
+                overlay.setMap(map);
+            });
+        });
+</script>
+</body>
+</html>
