@@ -202,6 +202,47 @@ function init(){
             };
             // Bind our overlay to the map…
             overlay.setMap(map);
+
+            var roomtype_list = from_arr_to_set(data.map(function (value) {
+                return value['room_type'];
+            }));
+
+            var legend = d3.select("#google")
+                .append("svg")
+                .attr('style', 'background:black')
+                .attr("margin-top", '20px')
+                .selectAll("g")
+                .data(roomtype_list)
+                .enter()
+                .append("g")
+                .attr("transform", function(d, i){
+                    return "translate(" +i*200  + ",0)";
+                });
+
+            legend.append("circle")
+                .attr("r", 4.5)
+                .attr("cx", '10px')
+                .attr("cy", '10px')
+                .attr("stroke", "white")
+                .attr("stroke-width", "1.5px")
+                .attr("fill", function (d) {
+                    switch (d){
+                        case 'Private room':
+                            return "brown";
+                        case 'Entire home/apt':
+                            return "green";
+                        default:
+                            return "yellow";
+                    }
+                });
+
+            legend.append("text")
+                .attr("x", 20)
+                .attr("y", 9.5)
+                .attr("dy", "0.32em")
+                .style("fill", 'white')
+                .text(function(d) { return d; });
+
         }
     });
 }
