@@ -3,6 +3,35 @@ html, body, #map{
     height: 100%;
     margin: 0;
     padding: 0;
+    background-color: lightskyblue;
+}
+#map{
+    margin-top: 20px;
+    width: 100%;
+    height:800px;
+    border-radius:0.5em;
+}
+
+#searchDistricts{
+    width: 100%;
+    height:650px;
+    margin-top: 20px;
+    margin-left:20px;
+    list-style-type: none;
+    disply:inline-block;
+}
+#neighbour{
+    width: 25%;
+    height:650px;
+    float:left;
+}
+
+#districtsMap{
+    margin-right: 20px;
+    width:70%;
+    height: 650px;
+    border-radius:0.5em;
+    float:left;
 }
 
 .nav_ul{
@@ -31,11 +60,14 @@ html, body, #map{
 .airbnb{
     text-align: right;
     background-color: #FF5A60;
-}
-
-img{
     max-width: 100%;
     height:auto;
+}
+
+#img_cph{
+    max-width: 100%;
+    height:auto;
+    text-align: center;
 }
 
 .d3-tip{
@@ -45,4 +77,19 @@ img{
     background: rgba(0, 0, 0, 0.8);
     color: #fff;
     border-radius: 1px;
+}
+
+.stations, .stations svg {
+    position: absolute;
+}
+
+.stations svg {
+    width: 60px;
+    height: 20px;
+    padding-right: 100px;
+    font: 10px sans-serif;
+}
+
+.stations circle {
+
 }

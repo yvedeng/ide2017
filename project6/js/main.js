@@ -6,6 +6,75 @@ function init(){
     d3.csv("data/listings.csv", function(error, data) {
         if (error) throw error;
 
+        // Preprocessed the data
+        var neigh = data.map(function (value) {
+            return value['neighbourhood'];
+        });
+
+        // Formal the names
+        for (var i=0; i<neigh.length; i++){
+            switch(neigh[i]) {
+                case "Frederiksberg":
+                    continue;
+                case "Brnshj-Husum":
+                    data[i]['neighbourhood'] = "Brønshøj-Husum";
+                    continue;
+                case "sterbro":
+                    data[i]['neighbourhood'] = "Østerbro";
+                    continue;
+                case "Amager st":
+                    data[i]['neighbourhood'] = "Amager Øst";
+                    continue;
+                case "Nrrebro":
+                    data[i]['neighbourhood'] = "Nørrebro";
+                    continue;
+                case "Vanlse":
+                    data[i]['neighbourhood'] = "Vanløse";
+                    continue;
+                default:
+                    continue;
+            }
+        }
+
+        // Build the district Map
+        var map = L.map('districtsMap').setView([55.6761, 12.5683], 12);
+        var sn;
+        L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
+            maxZoom: 18,
+            attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, ' +
+            '<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
+            'Imagery © <a href="http://mapbox.com">Mapbox</a>',
+            id: 'mapbox.streets'
+        }).addTo(map);
+
+        function style(feature) {
+            if (sn == feature.properties['navn']){
+                return {
+                    weight: 2,
+                    opacity: 1,
+                    color: 'white',
+                    dashArray: '3',
+                    fillOpacity: 0.3,
+                    fillColor:'#ff0000'
+                }
+            }else{
+                return{
+                    weight: 2,
+                    opacity: 1,
+                    color: 'white',
+                    dashArray: '3',
+                    fillOpacity: 0.3,
+                    fillColor: 'white'
+                }
+            }
+        }
+
+        var geojson = L.geoJson(districts, {
+            style: style,
+            onEachFeature: onEachFeature
+        }).addTo(map);
+
+        // get a new neighbour lists
         var neigh = data.map(function (value) {
             return value['neighbourhood'];
         });
@@ -25,8 +94,20 @@ function init(){
             .text(function (d) {
                 return d
             })
+            .on('mouseover', ListMouseOver)
+            .on('mouseout', ListMouseOut)
             .on('click', handleClick);
         console.log('neigh list: ', neigh_list);
+
+        function ListMouseOver(d){
+            sn = d;
+            geojson.setStyle(style);
+        }
+
+        function ListMouseOut(d){
+            sn = "" ;
+            geojson.setStyle(style);
+        }
 
         function handleClick(d) {
             console.log(d);
@@ -39,16 +120,18 @@ function init(){
                 }
             }
 
-            // "id" + d['id'] + '<br/>' +
-            // "name" + d["name"] + '<br/>' +
-            // "host_name" + d["host_name"] + "<br/>" +
-            // "room_type" + d["room_type"] + "<br/>" +
-            // "price" + d["price"] + "<br/>" +
-            // "minimum nights" + d["minimum_nights"] + "<br/>"
-
             latitude_center = get_center(new_data, 'latitude');
             longitude_center = get_center(new_data, 'longitude');
 
+            function onMapClick(d){
+                console.log(d);
+                alert("id" + d['id'] + '<br/>' +
+                    "name" + d["name"] + '<br/>' +
+                    "host_name" + d["host_name"] + "<br/>" +
+                    "room_type" + d["room_type"] + "<br/>" +
+                    "price" + d["price"] + "<br/>" +
+                    "minimum nights" + d["minimum_nights"] + "<br/>")
+            }
 
             // Create the Google Map…
             var map = new google.maps.Map(d3.select("#map").node(), {
@@ -56,7 +139,6 @@ function init(){
                 center: new google.maps.LatLng(latitude_center, longitude_center),
                 mapTypeId: google.maps.MapTypeId.TERRAIN
             });
-
 
             var overlay = new google.maps.OverlayView();
 
@@ -120,11 +202,8 @@ function init(){
             };
             // Bind our overlay to the map…
             overlay.setMap(map);
-        };
+        }
     });
-
-
-
 }
 
 // Create Event Handlers for mouse
@@ -189,3 +268,11 @@ function get_center(data, description){
     }
     return count/data.length;
 }
+
+function onEachFeature(feature, layer) {
+    // does this feature have a property named popupContent?
+    if (feature.properties && feature.properties.popupContent) {
+        layer.bindPopup(feature.properties.popupContent);
+    }
+}
+
