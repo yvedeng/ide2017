@@ -37,6 +37,7 @@ function init(){
         }
 
         // Build the district Map
+        // Build the district Map
         var map = L.map('districtsMap').setView([55.6761, 12.5683], 12);
         var sn;
         L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
@@ -90,14 +91,13 @@ function init(){
             .enter()
             .append('li')
             .append('a')
-            .attr('href', '#map')
+            .attr('href', '#googleMap')
             .text(function (d) {
                 return d
             })
             .on('mouseover', ListMouseOver)
             .on('mouseout', ListMouseOut)
             .on('click', handleClick);
-        console.log('neigh list: ', neigh_list);
 
         function ListMouseOver(d){
             sn = d;
@@ -109,8 +109,8 @@ function init(){
             geojson.setStyle(style);
         }
 
+        // Once any element of the list has been clicked, google map pops out;
         function handleClick(d) {
-            console.log(d);
             var new_data = [];
             for (var i = 0; i < data.length; i++) {
                 if (data[i]['neighbourhood'] == d) {
@@ -123,86 +123,60 @@ function init(){
             latitude_center = get_center(new_data, 'latitude');
             longitude_center = get_center(new_data, 'longitude');
 
-            function onMapClick(d){
-                console.log(d);
-                alert("id" + d['id'] + '<br/>' +
-                    "name" + d["name"] + '<br/>' +
-                    "host_name" + d["host_name"] + "<br/>" +
-                    "room_type" + d["room_type"] + "<br/>" +
-                    "price" + d["price"] + "<br/>" +
-                    "minimum nights" + d["minimum_nights"] + "<br/>")
-            }
 
             // Create the Google Map…
-            var map = new google.maps.Map(d3.select("#map").node(), {
+            var gooMap = new google.maps.Map(d3.select("#googleMap").node(), {
                 zoom: 14,
                 center: new google.maps.LatLng(latitude_center, longitude_center),
                 mapTypeId: google.maps.MapTypeId.TERRAIN
             });
 
-            var overlay = new google.maps.OverlayView();
+            var locations = [];
+            var label = ["E", "P", "S"]
 
-            // Add the container when the overlay is added to the map.
-            overlay.onAdd = function () {
-                var layer = d3.select(this.getPanes().overlayLayer).append("div")
-                    .attr("class", "stations");
+            for (var i=0; i < new_data.length; i++){
+                locations.push({lat:parseFloat(new_data[i]['latitude']) , lng:parseFloat(new_data[i]['longitude'])});
+            }
 
-                // Draw each marker as a separate SVG element.
-                // We could use a single SVG, but what size would it have?
-                overlay.draw = function () {
-                    var projection = this.getProjection(),
-                        padding = 10;
+            var markers = locations.map(function(location, i){
+                var marker = new google.maps.Marker({
+                    position:location,
+                    label:handleLabel(i),
+                    title: "click to show details"
+                });
 
-                    var marker = layer.selectAll("svg")
-                        .data(d3.entries(new_data))
-                        .each(transform) // update existing markers
-                        .enter().append("svg")
-                        .each(transform)
-                        .attr("class", "marker");
+                marker.addListener('click', function() {
+                    new google.maps.InfoWindow({
+                        content:infoString(i)
+                    }).open(map, marker);
+                });
+                return marker;
+            });
 
-                    console.log(marker);
-                    // Add a circle.
-                    marker.append("circle")
-                        .data(new_data)
-                        .attr("r", 4.5)
-                        .attr("cx", padding)
-                        .attr("cy", padding)
-                        .attr("fill", handleColor)
-                        .attr("stroke", "black")
-                        .attr("stroke-width", "1.5px")
-                        .on("mouseover", handleMouseOver);
+            // Create Clusters
+            var markerCluster = new MarkerClusterer(gooMap, markers,
+                {imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'});
 
-                    // marker.append("text")
-                    //     .attr("x", padding + 7)
-                    //     .attr("y", padding)
-                    //     .attr("dy", ".31em")
-                    //     .text(function (d) {
-                    //         return d.key;
-                    //     });
+            function infoString(i) {
+                return "id: " + new_data[i]['id'] + '<br/>' +
+                    "name: " + new_data[i]["name"] + '<br/>' +
+                    "host_name: " + new_data[i]["host_name"] + "<br/>" +
+                    "room_type: " + new_data[i]["room_type"] + "<br/>" +
+                    "price: " + new_data[i]["price"] + "<br/>" +
+                    "minimum nights: " + new_data[i]["minimum_nights"] + "<br/>";
+            }
 
-                    function handleColor(d){
-                        if (d['room_type'] == 'Private room'){
-                            return "brown"
-                        } if (d['room_type'] == 'Entire home/apt'){
-                            return "green"
-                        } else{
-                            return "yellow"
-                        }
-                    }
+            function handleLabel(i){
+                if (new_data[i]['room_type'] == 'Private room'){
+                    return "P";
+                } if (new_data[i]['room_type'] == 'Entire home/apt'){
+                    return "E";
+                } else{
+                    return "S";
+                }
+            }
 
-                    function transform(d) {
-                        point = new google.maps.LatLng(d.value.latitude, d.value.longitude);
-                        point = projection.fromLatLngToDivPixel(point);
-                        return d3.select(this)
-                            .style("left", (point.x) + "px")
-                            .style("top", (point.y) + "px");
-                    }
-                };
-
-            };
-            // Bind our overlay to the map…
-            overlay.setMap(map);
-
+            // Create legends for google map
             var roomtype_list = from_arr_to_set(data.map(function (value) {
                 return value['room_type'];
             }));
@@ -219,58 +193,105 @@ function init(){
                     return "translate(" +i*200  + ",0)";
                 });
 
-            legend.append("circle")
-                .attr("r", 4.5)
-                .attr("cx", '10px')
-                .attr("cy", '10px')
-                .attr("stroke", "white")
-                .attr("stroke-width", "1.5px")
-                .attr("fill", function (d) {
-                    switch (d){
-                        case 'Private room':
-                            return "brown";
-                        case 'Entire home/apt':
-                            return "green";
-                        default:
-                            return "yellow";
-                    }
-                });
+            // legend.append("circle")
+            //     .attr("r", 4.5)
+            //     .attr("cx", '10px')
+            //     .attr("cy", '10px')
+            //     .attr("stroke", "white")
+            //     .attr("stroke-width", "1.5px")
+            //     .attr("fill", function (d) {
+            //         switch (d){
+            //             case 'Private room':
+            //                 return "brown";
+            //             case 'Entire home/apt':
+            //                 return "green";
+            //             default:
+            //                 return "yellow";
+            //         }
+            //     });
 
             legend.append("text")
                 .attr("x", 20)
                 .attr("y", 9.5)
                 .attr("dy", "0.32em")
                 .style("fill", 'white')
-                .text(function(d) { return d; });
+                .text(function(d) { return d[0]+ ": " + d; });
 
-        }
-    });
-}
+            // The old way generates markers
+            // // Add the container when the overlay is added to the map.
+            // overlay.onAdd = function () {
+            //     var layer = d3.select(this.getPanes().overlayLayer).append("div")
+            //         .attr("class", "stations");
+            //
+            //     // Draw each marker as a separate SVG element.
+            //     // We could use a single SVG, but what size would it have?
+            //     overlay.draw = function () {
+            //         var projection = this.getProjection(),
+            //             padding = 10;
+            //
+            //         var marker = layer.selectAll("svg")
+            //             .data(d3.entries(new_data))
+            //             .each(transform) // update existing markers
+            //             .enter().append("svg")
+            //             .each(transform)
+            //             .attr("class", "marker");
+            //
+            //         // Add a circle.
+            //         marker.append("circle")
+            //             .attr("class", handleName)
+            //             .data(new_data)
+            //             .attr("r", 4.5)
+            //             .attr("cx", padding)
+            //             .attr("cy", padding)
+            //             .attr("fill", handleColor)
+            //             .attr("stroke", "black")
+            //             .attr("stroke-width", "1.5px")
+            //             .on('mouseover', handleMouseOver);
+
+
+
+                    //
+                    // function transform(d) {
+                    //     point = new google.maps.LatLng(d.value.latitude, d.value.longitude);
+                    //     point = projection.fromLatLngToDivPixel(point);
+                    //     return d3.select(this)
+                    //         .style("left", (point.x-padding) + "px")
+                    //         .style("top", (point.y-padding) + "px");
+                    // }
+                // };
+
+            // };
+            // Bind our overlay to the map…
+            // overlay.setMap(gooMap);
+
+        }; // Click function ends
+    }); // csv function ends
+} // init function ends
 
 // Create Event Handlers for mouse
-function handleMouseOver(d) {  // Add interactivity
-    // Use D3 to select element, change color and size
-    d3.select(this)
-        .attr('fill', 'pink')
-        .attr('r', 6);
-
-    g.append('text')
-        .attr('id', d['id'])
-        .attr('x', function () {
-            return d['latitude'];
-        })
-        .attr('y', function () {
-            return d['longitude'];
-        })
-        .text("room type: " + d['roomtype']);
-}
-
-function handleMouseOut(d, i) {
-    // Use D3 to select element, change color back to normal
-    d3.select(this)
-        .attr('r', 6);
-    document.getElementById(d.value.id).remove()
-}
+// function handleMouseOver(d) {  // Add interactivity
+//     // Use D3 to select element, change color and size
+//     d3.select(this)
+//         .attr('fill', 'pink')
+//         .attr('r', 6);
+//
+//     g.append('text')
+//         .attr('id', d['id'])
+//         .attr('x', function () {
+//             return d['latitude'];
+//         })
+//         .attr('y', function () {
+//             return d['longitude'];
+//         })
+//         .text("room type: " + d['roomtype']);
+// }
+//
+// function handleMouseOut(d, i) {
+//     // Use D3 to select element, change color back to normal
+//     d3.select(this)
+//         .attr('r', 6);
+//     document.getElementById(d.value.id).remove()
+// }
 
 // Create a filter list
 function filterList() {

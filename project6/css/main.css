@@ -1,11 +1,11 @@
-html, body, #map{
+html, body, #googleMap{
     width: 100%;
     height: 100%;
     margin: 0;
     padding: 0;
     background-color: lightskyblue;
 }
-#map{
+#googleMap{
     margin-top: 20px;
     margin-right:20px;
     marigin:100%;
@@ -15,11 +15,12 @@ html, body, #map{
 
 #searchDistricts{
     width: 100%;
-    height:650px;
+    height:auto;
     margin-top: 20px;
     margin-left:20px;
     list-style-type: none;
     disply:inline-block;
+    text-align:center;
 }
 #neighbour{
     width: 25%;
@@ -45,6 +46,8 @@ html, body, #map{
 
 .nav_li{
     float: left;
+    width:33%;
+    height:50px;
 }
 .nav_li a{
     display: block;
@@ -66,6 +69,7 @@ html, body, #map{
 }
 
 #img_cph{
+    margin-top:20px;
     max-width: 100%;
     height:auto;
     text-align: center;

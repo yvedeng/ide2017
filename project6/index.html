@@ -10,6 +10,7 @@
     <script src="https://rawgit.com/mrdoob/three.js/master/examples/js/renderers/CSS3DRenderer.js"></script>
     <!--Google Map-->
     <script src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyC9IuCU6bYa2ojAUkDawnt68AlQ002g-qI"></script>
+    <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js"></script>
     <!--Leaflet-->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.0/dist/leaflet.css"
           integrity="sha512-Rksm5RenBEKSKFjgI3a41vrjkw4EVPlJ3+OiI65vTjIdo9brlAacEuKOiQ5OFh7cOI1bkDwLqdLw3Zg0cRJAAQ=="
@@ -26,12 +27,13 @@
     <script src="js/main.js"></script>
     <script src="js/d3-tip.js"></script>
     <script src="js/districts.js"></script>
+    <!--<script src="js/demo.js"></script>-->
     <!--stylesheets-->
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/filter_list.css">
 </head>
 
-<body>
+<div>
 
 <div class="airbnb">
     <img src="img/airbnb_logo.png"/>
@@ -59,11 +61,18 @@
 </div>
 
 <div id="google">
-    <div id="map"></div>
+    <div id="googleMap"></div>
 </div>
 
+</div>
+    <h2>Reference</h2>
+    <ul>
+        <li> District Map: <a href="http://leafletjs.com/examples/choropleth/"> http://leafletjs.com/examples/choropleth/ </a></li>
+        <li> District Dataset: <a href="http://data.kk.dk/">http://data.kk.dk/</a></li>
+        <li> Google Map: <a href="https://developers.google.com/maps/documentation/javascript/examples/">https://developers.google.com/maps/documentation/javascript/examples/</a></li>
+    </ul>
+</div>
 
 </body>
 
-<p>*District geojson from: http://data.kk.dk/ </p>
 </html>
