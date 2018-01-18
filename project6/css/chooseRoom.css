@@ -3,8 +3,56 @@
     margin-top:20px;
     margin-left:20px;
     margin-right:20px;
+    margin-bottom: 20px;
     border: 1px solid rgba(127,255,255,0.25);
     border-radius:0.5em;
-    width:30%;
+    width:45%;
+    float: left;
 }
 
+#report{
+    background-color: #f6f6f6;
+    margin-top:20px;
+    margin-left:20px;
+    margin-right:20px;
+    margin-bottom: 20px;
+    border: 1px solid rgba(127,255,255,0.25);
+    border-radius:0.5em;
+    width:45%;
+    float: left;
+}
+
+
+#tableDiv{
+    margin-left:20px;
+    margin-right:20px;
+    background-color: #FF5A60;
+}
+
+table{
+    border-collapse:collapse;
+}
+
+tr:nth-of-type(odd){
+    background-color: lightpink;
+}
+th{
+    background-color: #333;
+    color:white;
+    font-weight: bold;
+    cursor:s-resize;
+    background-repeat:no-repeat;
+    background-position: 3% center;
+}
+td,th{
+    padding:6px;
+    border:1px solid #ccc;
+    text-align:left;
+}
+
+th.des:after{
+    content:"\21E9";
+}
+th.aes:after{
+    content:"\21E7"
+}

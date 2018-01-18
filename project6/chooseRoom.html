@@ -10,6 +10,7 @@
 </head>
 
 <body>
+
 <div class="airbnb">
     <img src="img/airbnb_logo.png"/>
 </div>
@@ -39,7 +40,7 @@
 
     <form id="price_range">
         <b>Price range: </b> <br/>
-        <input type="number" id="price_min" name="minimum" min="0"> - <input type="number" id="price_max" name="maximum" min="0">
+        <input type="number" id="price_min" name="minimum" min="0" value="-1"> - <input type="number" id="price_max" name="maximum" min="0" value="-1">
     </form><br/>
 
     <form id="stay_range">
@@ -47,8 +48,16 @@
         <input id="stay_nights">
     </form><br/>
 
-    <input type="submit" onclick="handleClick()">
     <input type="reset" onclick="handleReset()">
+    <input type="submit" onclick="handleClick()">
 </div>
+<div id="report">
+    <b>Report:</b><br/><br/>
+</div>
+
+<div id="tabelDiv">
+    <div id="roomTable"></div>
+</div>
+
 </body>
 </html>
