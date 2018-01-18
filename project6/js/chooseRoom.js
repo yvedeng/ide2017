@@ -42,7 +42,8 @@ d3.csv("data/listings.csv", function(error, data) {
 
     d3.select('#neigh_list')
         .selectAll('input')
-        .data(neighbour_list).enter()
+        .data(neighbour_list)
+        .enter()
         .append('li')
         .append('label')
         // .attr('for',function(d,i){ return 'a'+i; })
@@ -221,8 +222,10 @@ function handleClick(){
 }
 
 function handleFilter(data, selected_neigh, room, stay, min, max){
+    d3.select('.div_report').remove();
     var report = d3.select('#report')
         .append('div')
+        .attr('class', 'div_report')
         .text((data.length)+ " rooms in total");
     var A = filterNeighbour(data, selected_neigh);
     report.append('div')
