@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <script src="https://d3js.org/d3.v4.min.js" charset="utf-8"></script>
     <link rel="stylesheet" href="css/main.css">
-    <link rel="stylesheet" href="css/map.css">
-    <link rel="stylesheet" href="css/filter_list.css">
+    <link rel="stylesheet" href="css/chooseRoom.css">
+    <script src="js/chooseRoom.js"></script>
     <title>Perfect matches for you</title>
 </head>
 
@@ -22,7 +22,33 @@
     </ul>
 </nav>
 
+<div class="form">
+    <form id="neigh_checkbox">
+        <b>Neighbourhood:</b> <br/>
+        <ul id="neigh_list"></ul>
+    </form>
+    <button type="button" onclick="checkAll()">Check All</button>
+    <button type="button" onclick="uncheckAll()">Uncheck All</button>
+    <br/><br/>
+    <form id="neigh_lists">
+        <b>Room type:</b> <br/>
+        <input id="roomtype" list="rooms" name="type">
+        <datalist id = "rooms">
+        </datalist>
+    </form><br/>
 
+    <form id="price_range">
+        <b>Price range: </b> <br/>
+        <input type="number" id="price_min" name="minimum" min="0"> - <input type="number" id="price_max" name="maximum" min="0">
+    </form><br/>
 
+    <form id="stay_range">
+        <b>Stay nights: </b><br/>
+        <input id="stay_nights">
+    </form><br/>
+
+    <input type="submit" onclick="handleClick()">
+    <input type="reset" onclick="handleReset()">
+</div>
 </body>
 </html>

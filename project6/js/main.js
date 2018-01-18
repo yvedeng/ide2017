@@ -240,8 +240,6 @@ function init(){
             //         }
             //     });
 
-
-
             // The old way generates markers
             // // Add the container when the overlay is added to the map.
             // overlay.onAdd = function () {

@@ -1,0 +1,10 @@
+.form{
+    background-color: #f6f6f6;
+    margin-top:20px;
+    margin-left:20px;
+    margin-right:20px;
+    border: 1px solid rgba(127,255,255,0.25);
+    border-radius:0.5em;
+    width:30%;
+}
+
