@@ -14,21 +14,21 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="index.html" pinned="false" current-in-tab="true">
+      <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1065">
-              <caret line="71" column="178" lean-forward="false" selection-start-line="71" selection-start-column="178" selection-end-line="71" selection-end-column="178" />
+            <state relative-caret-position="214">
+              <caret line="63" column="22" lean-forward="false" selection-start-line="63" selection-start-column="13" selection-end-line="63" selection-end-column="22" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="main.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="main.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/js/main.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="4305">
-              <caret line="287" column="2" lean-forward="false" selection-start-line="287" selection-start-column="2" selection-end-line="287" selection-end-column="2" />
+            <state relative-caret-position="211">
+              <caret line="127" column="66" lean-forward="false" selection-start-line="127" selection-start-column="66" selection-end-line="127" selection-end-column="66" />
               <folding>
                 <marker date="1516195821000" expanded="true" signature="1622:1628" ph="©" />
               </folding>
@@ -79,9 +79,9 @@
         <option value="$PROJECT_DIR$/css/filter_list.css" />
         <option value="$PROJECT_DIR$/js/districts.js" />
         <option value="$PROJECT_DIR$/js/demo.js" />
-        <option value="$PROJECT_DIR$/js/main.js" />
         <option value="$PROJECT_DIR$/css/main.css" />
         <option value="$PROJECT_DIR$/index.html" />
+        <option value="$PROJECT_DIR$/js/main.js" />
       </list>
     </option>
   </component>
@@ -92,8 +92,8 @@
     <sorting>DEFINITION_ORDER</sorting>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="57" />
-    <option name="y" value="34" />
+    <option name="x" value="-189" />
+    <option name="y" value="45" />
     <option name="width" value="1177" />
     <option name="height" value="741" />
   </component>
@@ -184,15 +184,15 @@
       <option name="presentableId" value="Default" />
       <updated>1515696491684</updated>
       <workItem from="1515696494337" duration="4517000" />
-      <workItem from="1515872660959" duration="53316000" />
+      <workItem from="1515872660959" duration="53532000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="57833000" />
+    <option name="totallyTimeSpent" value="58049000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="57" y="34" width="1177" height="741" extended-state="0" />
+    <frame x="-189" y="45" width="1177" height="741" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="TypeScript" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -394,16 +394,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/js/main.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="4305">
-          <caret line="287" column="2" lean-forward="false" selection-start-line="287" selection-start-column="2" selection-end-line="287" selection-end-column="2" />
-          <folding>
-            <marker date="1516195821000" expanded="true" signature="1622:1628" ph="©" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/chooseRoom.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="270">
@@ -414,9 +404,19 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1065">
-          <caret line="71" column="178" lean-forward="false" selection-start-line="71" selection-start-column="178" selection-end-line="71" selection-end-column="178" />
+        <state relative-caret-position="214">
+          <caret line="63" column="22" lean-forward="false" selection-start-line="63" selection-start-column="13" selection-end-line="63" selection-end-column="22" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/main.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="211">
+          <caret line="127" column="66" lean-forward="false" selection-start-line="127" selection-start-column="66" selection-end-line="127" selection-end-column="66" />
+          <folding>
+            <marker date="1516195821000" expanded="true" signature="1622:1628" ph="©" />
+          </folding>
         </state>
       </provider>
     </entry>
