@@ -229,7 +229,7 @@ function handleFilter(data, selected_neigh, room, stay, min, max){
         .text((data.length)+ " rooms in total");
     var A = filterNeighbour(data, selected_neigh);
     report.append('div')
-        .text((A.length)+' rooms left after filtered Neighbourhood');
+        .text((A.length)+' rooms left after filtered neighbourhood');
     console.log("neigh passed", A);
     var B = A.filter(function(value){
         return value['room_type'] == room;
@@ -249,7 +249,7 @@ function handleFilter(data, selected_neigh, room, stay, min, max){
         return parseInt(value['minimum_nights'])>=stay;
     });
     report.append('div')
-        .text((D.length)+' rooms left');
+        .text((D.length)+' rooms left after filtered stay nights');
     report.append('div')
         .text('The end.');
     console.log('min night paseed', D);
