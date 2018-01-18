@@ -79,7 +79,7 @@ d3.csv("data/listings.csv", function(error, data) {
         .attr('min', Math.max.apply(Math, stayNights))
 
     function handleClick(){
-        
+
     }
 
 });
