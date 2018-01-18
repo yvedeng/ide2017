@@ -109,8 +109,10 @@ function init(){
             geojson.setStyle(style);
         }
 
+        var legend_exists = false;
         // Once any element of the list has been clicked, google map pops out;
         function handleClick(d) {
+			document.getElementById("googleMap").style.height = "700px";
             var new_data = [];
             for (var i = 0; i < data.length; i++) {
                 if (data[i]['neighbourhood'] == d) {
@@ -181,18 +183,28 @@ function init(){
                 return value['room_type'];
             }));
 
-            var legend = d3.select("#google")
-                .append("svg")
-                .attr('style', 'background:black')
-                .attr("margin-top", '20px')
-                .selectAll("g")
-                .data(roomtype_list)
-                .enter()
-                .append("g")
-                .attr("transform", function(d, i){
-                    return "translate(" +i*200  + ",0)";
-                });
-
+            if (legend_exists == false) {
+                var legend = d3.select("#google")
+                    .append("svg")
+                    .attr('style', 'background:black')
+                    .attr("margin-top", '20px')
+                    .selectAll("g")
+                    .data(roomtype_list)
+                    .enter()
+                    .append("g")
+                    .attr("transform", function (d, i) {
+                        return "translate(" + i * 200 + ",0)";
+                    });
+                legend.append("text")
+                    .attr("x", 20)
+                    .attr("y", 9.5)
+                    .attr("dy", "0.32em")
+                    .style("fill", 'white')
+                    .text(function (d) {
+                        return d[0] + ": " + d;
+                    });
+                legend_exists = true;
+            };
             // legend.append("circle")
             //     .attr("r", 4.5)
             //     .attr("cx", '10px')
@@ -210,12 +222,7 @@ function init(){
             //         }
             //     });
 
-            legend.append("text")
-                .attr("x", 20)
-                .attr("y", 9.5)
-                .attr("dy", "0.32em")
-                .style("fill", 'white')
-                .text(function(d) { return d[0]+ ": " + d; });
+
 
             // The old way generates markers
             // // Add the container when the overlay is added to the map.
