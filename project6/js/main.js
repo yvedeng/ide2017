@@ -36,44 +36,47 @@ function init(){
             }
         }
 
-        // Build the district Map
-        // Build the district Map
-        var map = L.map('districtsMap').setView([55.6761, 12.5683], 12);
-        var sn;
-        L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
-            maxZoom: 18,
-            attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, ' +
-            '<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
-            'Imagery © <a href="http://mapbox.com">Mapbox</a>',
-            id: 'mapbox.streets'
-        }).addTo(map);
+        var disMap = new google.maps.Map(document.getElementById('districtsMap'),{
+            zoom: 12,
+            center:{lat:55.6731, lng:12.5683}
+        });
+
+        disMap.data.loadGeoJson('data/districts.json');
+        var sn = "";
+
+        disMap.data.setStyle(style);
+
+        disMap.data.addListener('mouseover', function(event){
+            disMap.data.overrideStyle(event.feature, {fillColor:'#ff0000'})
+        });
+
+        disMap.data.addListener('mouseout', function(event){
+            disMap.data.revertStyle();
+        });
 
         function style(feature) {
-            if (sn == feature.properties['navn']){
+            if (sn == feature.f['navn']){
                 return {
                     weight: 2,
                     opacity: 1,
                     color: 'white',
+                    strokeWeight:1,
                     dashArray: '3',
                     fillOpacity: 0.3,
-                    fillColor:'#ff0000'
+                    fillColor:'#ff0000',
                 }
             }else{
                 return{
                     weight: 2,
                     opacity: 1,
+                    strokeWeight:1,
                     color: 'white',
                     dashArray: '3',
                     fillOpacity: 0.3,
                     fillColor: 'white'
                 }
             }
-        }
-
-        var geojson = L.geoJson(districts, {
-            style: style,
-            onEachFeature: onEachFeature
-        }).addTo(map);
+        };
 
         // get a new neighbour lists
         var neigh = data.map(function (value) {
@@ -101,15 +104,16 @@ function init(){
 
         function ListMouseOver(d){
             sn = d;
-            geojson.setStyle(style);
+            disMap.data.setStyle(style);
         }
 
         function ListMouseOut(d){
             sn = "" ;
-            geojson.setStyle(style);
+            disMap.data.setStyle(style);
         }
 
         var legend_exists = false;
+
         // Once any element of the list has been clicked, google map pops out;
         function handleClick(d) {
 			document.getElementById("googleMap").style.height = "700px";
@@ -133,8 +137,21 @@ function init(){
                 mapTypeId: google.maps.MapTypeId.TERRAIN
             });
 
+            gooMap.data.loadGeoJson('data/districts.json');
+            gooMap.data.setStyle(function(feature){
+                return {
+                    weight: 2,
+                    opacity: 1,
+                    strokeWeight:1,
+                    color: 'white',
+                    dashArray: '3',
+                    fillOpacity: 0.3,
+                    fillColor: 'white'
+                }
+            });
+
             var locations = [];
-            var label = ["E", "P", "S"]
+            var label = ["E", "P", "S"];
 
             for (var i=0; i < new_data.length; i++){
                 locations.push({lat:parseFloat(new_data[i]['latitude']) , lng:parseFloat(new_data[i]['longitude'])});
@@ -150,7 +167,7 @@ function init(){
                 marker.addListener('click', function() {
                     new google.maps.InfoWindow({
                         content:infoString(i)
-                    }).open(map, marker);
+                    }).open(gooMap, marker);
                 });
                 return marker;
             });
@@ -205,6 +222,7 @@ function init(){
                     });
                 legend_exists = true;
             };
+
             // legend.append("circle")
             //     .attr("r", 4.5)
             //     .attr("cx", '10px')
@@ -254,8 +272,6 @@ function init(){
             //             .attr("stroke", "black")
             //             .attr("stroke-width", "1.5px")
             //             .on('mouseover', handleMouseOver);
-
-
 
                     //
                     // function transform(d) {
