@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <script src="https://d3js.org/d3.v4.min.js" charset="utf-8"></script>
-    <link rel="stylesheet" href="css/main.css">
+    <!--<link rel="stylesheet" href="css/main.css">-->
     <link rel="stylesheet" href="css/bar.css">
-    <script src="js/barplot.js"></script>
+
     <title>Analysis about room type and price</title>
 </head>
 
@@ -25,32 +25,38 @@
     </ul>
 </nav>
 
+<div class="text-editor-wrap">
+    <div class = "inner-text">
+        <p>On this page, you can compare the distribution of three room types (Entire house/apartment, Private Room, Shared Room)
+            among 11 neighbourhoods, also the distribution of five price interval( see in the legend.).
+            The bars is sorted by the largest part of each bar. For instance, in the barplot of Room Type,
+            You can easily see that the first neighbourhood
+            has least Entire House/Apartment when the bottom neigbourhood has most rooms in all of three room types.
+            As the traffic of last neighbourhood is very convenient and also near to city central, it make sense that people would like
+            to choose housing around bottom neighbourhood.</p>
 
-    <div class="text-editor-wrap">
+        <p>In the barplot of price range, you can see almost all neighbours have large Price Interval of [301DKK, 1000 DKK].
+            Besides Indre By have most housings in price interval [1001DKK, 1500DKK] among all neighbours.
+            Correspondingly, the bar of price Interval keep the almost same ratio between two adjacent.
+            It seems location is part of factor of price but not the main reason.</p>
 
-        <div class = "inner-text">
-    <p>On this page, you can compare the distribution of three room types (Entire house/apartment, Private Room, Shared Room)
-    among 11 neighbourhoods, also the distribution of five price interval( see in the legend.).
-    The bars is sorted by the largest part of each bar. For instance, in the barplot of Room Type,
-    You can easily see that the first neighbourhood
-    has least Entire House/Apartment when the bottom neigbourhood has most rooms in all of three room types.
-    As the traffic of last neighbourhood is very convenient and also near to city central, it make sense that people would like
-        to choose housing around bottom neighbourhood.</p>
-
-    <p>In the barplot of price range, you can see almost all neighbours have large Price Interval of [301DKK, 1000 DKK].
-    Besides Indre By have most housings in price interval [1001DKK, 1500DKK] among all neighbours.
-    Correspondingly, the bar of price Interval keep the almost same ratio between two adjacent.
-        It seems location is part of factor of price but not the main reason.</p>
-
-
-
-
-        </div>
     </div>
-
-<div>
-<svg></svg>
 </div>
+
+    <div id="full">
+
+        <div class="form">
+        <form id="neigh_checkbox">
+            <b>Neighbourhood:</b> <br/>
+            <ul id="neigh_list"></ul>
+            <button type="button" onclick="checkAll()">Check All</button>
+            <button type="button" onclick="uncheckAll()">Uncheck All</button>
+        </form>
+        </div>
+        <div id="selector"></div>
+    </div>
+    <div class="barplots"></div>
+    <script src="js/bar.js"></script>
 
 </body>
 </html>

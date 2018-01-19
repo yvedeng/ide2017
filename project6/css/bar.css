@@ -3,6 +3,7 @@ html, body{
     height: 100%;
     margin: 0;
     padding: 0;
+    font-family: 'Open Sans', 'Trebuchet MS', 'Arial', 'sans-serif';
     /*background-color: lightskyblue;*/
 }
 
@@ -58,7 +59,7 @@ g{
 
 .nav_li{
     float: left;
-    width:33%;
+    width:25%;
     height:50px;
 }
 .nav_li a{
@@ -85,7 +86,7 @@ g{
     margin-left:20px;
     margin-right:20px;
 	width:auto;
-	height:auto;
+	height:100%;
 }
 
 .form{
@@ -104,4 +105,10 @@ g{
     margin-top:20px;
 	width:20%;
 	float:left;
+}
+
+.inner-text{
+    margin-left:20px;
+    margin-top:20px;
+    margin-right: 20px;
 }
