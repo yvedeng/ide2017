@@ -24,7 +24,7 @@
 
     <!--Inner links-->
     <!--js-->
-    <script src="js/main.js"></script>
+    <!--script src="js/main.js"></script-->
     <!--stylesheets-->
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/filter_list.css">
@@ -33,6 +33,7 @@
 <div class="airbnb">
     <img src="img/airbnb_logo.png"/>
     <h1>Airbnb in Copenhagen</h1>
+    <p class = "author">by Yifang Deng, Xiaolan Wang, Povilas Matusevičius</p>
 </div>
 
 <nav class="nav_bar">
@@ -44,34 +45,25 @@
     </ul>
 </nav>
 
-<!--<div id="img_cph">-->
-    <!--<img src="img/copenhagen_main.jpg"/>-->
-<!--</div>-->
 
-<div id="searchDistricts">
-    <div id="districtsMap"></div>
+<div class="text-editor-wrap">
 
-    <div id="neighbour">
-        <input type="text" id="myNeighInput" placeholder="Search for neighbourhood.." title="Type in a name">
-        <ul id="myNeighList"></ul>
-    </div>
+<div class = "inner-text">
+    <p>As a starting point for this visualization, we used <a href="http://insideairbnb.com/get-the-data.html">data</a> from the Airbnb of Copenhagen.
+       Namely, we used GeoJSON-formatted datasets to sketch the outline of
+        <a href="http://data.kk.dk/dataset/betalingszoner">districts</a>,
+        which named <font color="#6baed6">"Neighbourhood"</font> in the datafile, throught the city.</p>
+
+    <p>As people keep moving in and moving out everyday, according to statistical rules,
+        the roughly general situation almost doesn't change with time flying when sample data is enough.
+        Also, only data on the day of 15th June, 2017 is available. Based on this, we make a map plot to give
+        the distribution of Airbnb housing over all 11 neighbourhoods, a filter to help readers get a perfect match
+    in a proper range, and a stacked bar plot to compare the percentage of room types and price interval among 11 neighbourhoods.
+    </p>
+
+      The visualization is mainly built with <font color="#ff7f50">d3.v4.js</font>.
+    The map on <font color="#e7969c">Browsing</font> part is built with Leaflet.js.
+
+
 </div>
-
-<div id="google">
-    <div id="googleMap"></div>
 </div>
-
-</div>
-    <h2>Reference</h2>
-    <ul>
-        <li> District Map: <a href="http://leafletjs.com/examples/choropleth/"> http://leafletjs.com/examples/choropleth/ </a></li>
-        <li> District Dataset: <a href="http://data.kk.dk/">http://data.kk.dk/</a></li>
-        <li> Google Map: <a href="https://developers.google.com/maps/documentation/javascript/examples/">https://developers.google.com/maps/documentation/javascript/examples/</a></li>
-        <li> Sortable table: <a href="http://bl.ocks.org/AMDS/4a61497182b8fcb05906"> http://bl.ocks.org/AMDS/4a61497182b8fcb05906 </a> </li>
-        <li> Stacked bar plot: <a href="https://bl.ocks.org/mbostock/3887051">https://bl.ocks.org/mbostock/3887051 </a> </li>
-    </ul>
-</div>
-
-</body>
-
-</html>
