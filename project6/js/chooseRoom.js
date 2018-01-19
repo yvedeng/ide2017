@@ -181,41 +181,40 @@ function handleClick(){
 
         if (selected_neigh.length == 0){
             alert("Please choose your prefered neighbourhood.");
-        }
-
-        if (!roomtype_list.includes(room)){
-            alert("No room matches your preference!(room type illegal)");
-        }
-
-        if (stay>Math.max.apply(Math, stayNights) || stay<Math.min.apply(Math, stayNights)){
-            alert("No room matches your preference! (stay nights)");
-        }
-
-        var filteredData;
-        if (min==-1 || max==-1){
-            filteredData = handleFilter(availability, selected_neigh, room, stay, min, max);
-            if (filteredData.length==0){
-                alert('No room matches your preference!');
-            }else{
-                triggerTable(filteredData);
-            }
         }else{
-            if (min>=max){
-                alert("Price range is illegal!");
-                console.log("min", min);
-                console.log("max",max);
-            } else{
-                filteredData = handleFilter(availability, selected_neigh, room, stay, min, max);
-                if (filteredData.length==0){
-                    alert('No room matches your preference!');
+            if (!roomtype_list.includes(room)){
+                alert("No room matches your preference!(room type illegal)");
+            }else{
+                if (stay>Math.max.apply(Math, stayNights) || stay<Math.min.apply(Math, stayNights)){
+                    alert("No room matches your preference! (stay nights)");
                 }else{
-                    triggerTable(filteredData);
+                    var filteredData;
+                    if (min==-1 || max==-1){
+                        filteredData = handleFilter(availability, selected_neigh, room, stay, min, max);
+                        if (filteredData.length==0){
+                            alert('No room matches your preference!');
+                        }else{
+                            triggerTable(filteredData);
+                        }
+                    }else{
+                        if (min>=max){
+                            alert("Price range is illegal!");
+                            console.log("min", min);
+                            console.log("max",max);
+                        } else{
+                            filteredData = handleFilter(availability, selected_neigh, room, stay, min, max);
+                            if (filteredData.length==0){
+                                alert('No room matches your preference!');
+                            }else{
+                                triggerTable(filteredData);
+                            }
+                            console.log('selected rooms', filteredData);
+
+                        }//end else
+                    }//end else
                 }
-                console.log('selected rooms', filteredData);
-
-            }//end else
-        }//end else
-
+            }
+        }
 
     });
 
@@ -303,13 +302,15 @@ function triggerTable(filteredData){
             headers.attr('class', 'header');
             if (sortAscending){
                 rows.sort(function(a,b){
-                    return b[d] < a[d];
+                    // return parseFloat(b[d]) < parseFloat(a[d]);
+                    return d3.ascending(parseInt(b[d]), parseInt(a[d]));
                 });
                 sortAscending = false;
                 this.className = 'aes';
             } else{
                 rows.sort(function(a,b){
-                    return b[d] > a[d];
+                    // return b[d] > a[d];
+                    return d3.descending(parseInt(b[d]), parseInt(a[d]));
                 });
                 sortAscending = true;
                 this.className = 'des';
