@@ -37,7 +37,7 @@ function init(){
     var width = 960 - margin.left - margin.right,
         height = 500 - margin.top - margin.bottom;
 
-    var svg = d3.select("svg")
+    var svg = d3.select("#barplots").append("svg")
             .attr("width", width + margin.left + margin.right)
             .attr("height", height + margin.top + margin.bottom);
 
@@ -203,14 +203,11 @@ function RoomType() {
            // .attr("id",)
             .on("click",onclick);
 
-        console.log("test1");
-
         function onclick() {
 
             if (keys[i] == "Shared Room") plotSingle();
 
         }
-        console.log("test1");
 
         function plotSingle() {
 
@@ -261,11 +258,11 @@ function RoomType() {
 
 
     });
-    }
+}
 
     function PriceRange() {
 
-        d3.csv("listings_price.csv", function(d,i,columns) {
+        d3.csv("data/listings_price.csv", function(d,i,columns) {
 
             for (i = 1, t = 0; i < columns.length; ++i) t += d[columns[i]] = +d[columns[i]];
             d.total = t;
@@ -408,10 +405,6 @@ function RoomType() {
                 .attr("y", 9.5)
                 .attr("dy", "0.32em")
                 .text(function(d) { return d; });
-
-
-
-
 
         });
     }
