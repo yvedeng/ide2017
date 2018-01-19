@@ -47,10 +47,13 @@
 <div class="text-editor-wrap">
 
 <div class = "inner-text">
-    <p>As a starting point for this visualization, we used <a href="http://insideairbnb.com/get-the-data.html">data</a> from the Airbnb of Copenhagen.
-       Namely, we used GeoJSON-formatted datasets to sketch the outline of
-        <a href="http://data.kk.dk/dataset/betalingszoner">districts</a>,
-        which named <font color="#6baed6">"Neighbourhood"</font> in the datafile, throught the city.</p>
+    <p>This website has 3 navigation bars, i.e. Browsing, Choose Your Room and Analysis. It aims to help users get a general picture of Airbnb situations at
+        Copenhagen. </p>
+
+    <p>As a starting point for this visualization, we used <a href="http://insideairbnb.com/get-the-data.html">data</a> from the Airbnb at Copenhagen.
+        Meanwhile, we used GeoJSON-formatted dataset to sketch the outline of districts, which is downloaded at <a href="http://data.kk.dk/">Copenhagen data website.</a>
+    Note that 10 districts are covered by the geojson while Copenhagen actually has 11 districts. Since the data for district "Frederiksberg" is missing, there is
+    no interaction at Frederiksberg on the map in page <font color="#e7969c">Browsing</font>.</p>
 
     <p>As people keep moving in and moving out everyday, according to statistical rules,
         the roughly general situation almost doesn't change with time flying when sample data is enough.
@@ -59,9 +62,18 @@
     in a proper range, and a stacked bar plot to compare the percentage of room types and price interval among 11 neighbourhoods.
     </p>
 
-      The visualization is mainly built with <font color="#ff7f50">d3.v4.js</font>.
-    The map on <font color="#e7969c">Browsing</font> part is built with Leaflet.js.
+    <p>The visualization is mainly built with <font color="#ff7f50">d3.v4.js</font>.
+        The maps on <font color="#e7969c">Browsing</font> part is built with Google developer API. </p>
 
-
+</div>
+</div>
+<h2>Reference</h2>
+<ul>
+    <li> District Map: <a href="http://leafletjs.com/examples/choropleth/"> http://leafletjs.com/examples/choropleth/ </a></li>
+    <li> District Dataset: <a href="http://data.kk.dk/">http://data.kk.dk/</a></li>
+    <li> Google Map: <a href="https://developers.google.com/maps/documentation/javascript/examples/">https://developers.google.com/maps/documentation/javascript/examples/</a></li>
+    <li> Sortable table: <a href="http://bl.ocks.org/AMDS/4a61497182b8fcb05906"> http://bl.ocks.org/AMDS/4a61497182b8fcb05906 </a> </li>
+    <li> Stacked bar plot: <a href="https://bl.ocks.org/mbostock/3887051">https://bl.ocks.org/mbostock/3887051 </a> </li>
+</ul>
 </div>
 </div>

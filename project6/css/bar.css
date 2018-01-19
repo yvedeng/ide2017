@@ -89,6 +89,15 @@ g{
 	height:100%;
 }
 
+h1 {
+    float:left;
+    padding-top: 30px;
+    padding-left :50px;
+    text-align: center;
+    font: 45px "Palatino", "Georgia", serif;
+}
+
+
 .form{
     background-color: #f6f6f6;
     margin-top:20px;

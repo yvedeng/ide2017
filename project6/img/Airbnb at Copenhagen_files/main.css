@@ -63,14 +63,6 @@ html, body, #googleMap{
     background-color: #111;
 }
 
-h1 {
-    float:left;
-    padding-top: 30px;
-    padding-left :50px;
-    text-align: center;
-    font: 45px "Palatino", "Georgia", serif;
-}
-
 .airbnb{
     text-align: right;
     background-color: #FF5A60;
