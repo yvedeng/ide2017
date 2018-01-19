@@ -199,8 +199,8 @@ function handleClick(){
                     }else{
                         if (min>=max){
                             alert("Price range is illegal!");
-                            console.log("min", min);
-                            console.log("max",max);
+                            // console.log("min", min);
+                            // console.log("max",max);
                         } else{
                             filteredData = handleFilter(availability, selected_neigh, room, stay, min, max);
                             if (filteredData.length==0){
@@ -208,7 +208,7 @@ function handleClick(){
                             }else{
                                 triggerTable(filteredData);
                             }
-                            console.log('selected rooms', filteredData);
+                            // console.log('selected rooms', filteredData);
 
                         }//end else
                     }//end else
@@ -229,18 +229,18 @@ function handleFilter(data, selected_neigh, room, stay, min, max){
     var A = filterNeighbour(data, selected_neigh);
     report.append('div')
         .text((A.length)+' rooms left after filtered neighbourhood');
-    console.log("neigh passed", A);
+    // console.log("neigh passed", A);
     var B = A.filter(function(value){
         return value['room_type'] == room;
     });
     report.append('div')
         .text((B.length)+' rooms left after filtered room type');
-    console.log("room type passed", B);
+    // console.log("room type passed", B);
     if (min==-1 || max==-1){
         C = B;
     } else{
         var C = filterPrice(B, min, max);
-        console.log("price passed", C);
+        // console.log("price passed", C);
         report.append('div')
             .text((C.length)+' rooms left after filtered price');
     }
@@ -251,7 +251,7 @@ function handleFilter(data, selected_neigh, room, stay, min, max){
         .text((D.length)+' rooms left after filtered stay nights');
     report.append('div')
         .text('The end.');
-    console.log('min night paseed', D);
+    // console.log('min night paseed', D);
     return D;
 }
 
@@ -289,7 +289,7 @@ function triggerTable(filteredData){
     var titles = d3.keys(filteredData[0]);
 
 
-    console.log('titles', titles);
+    // console.log('titles', titles);
     var headers = table.append('thead')
         .selectAll('th')
         .data(titles)

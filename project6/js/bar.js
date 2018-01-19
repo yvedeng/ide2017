@@ -1,5 +1,3 @@
-
-
 function make_plot(changes, district_filter){
 	if (changes == true) {
 		selectValue = d3.select('select').property('value');
