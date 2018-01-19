@@ -81,6 +81,9 @@ g{
 }
 
 .barplots {
+    margin-top:20px;
+    margin-left:20px;
+    margin-right:20px;
 	width:auto;
 	height:auto;
 }
@@ -99,6 +102,6 @@ g{
 
 #selector {
     margin-top:20px;
-	width:30%;
-	float:right;
+	width:20%;
+	float:left;
 }
