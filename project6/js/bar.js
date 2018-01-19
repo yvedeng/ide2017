@@ -1,43 +1,42 @@
-d3.select(window).on('load', init);
 
-function init(){
+
+function make_plot(changes, district_filter){
+	if (changes == true) {
+		selectValue = d3.select('select').property('value');
+        if (selectValue == "Room Type") {
+            d3.select(".barplots").selectAll("*").remove();
+            RoomType();
+        }
+        else {
+            d3.select(".barplots").selectAll("*").remove();
+            PriceRange();
+        }
+	}
+
     var options_list  = ["Room Type", "Price Range"];
 
-    var select = d3.select('body')
+	if (changes == false) {
+    var select = d3.select('#selector')
         .append('select')
-        .attr('class','select')
+		.attr('id', 'select')
         .call(RoomType)
-        .on('change',onchange);
+        .on('change',handleClick);
 
     var options = select
         .selectAll('option')
         .data(options_list).enter()
         .append('option')
         .text(function (d) { return d; });
+	}
 
-
-    function  onchange() {
-
-        selectValue = d3.select('select').property('value');
-
-        if (selectValue == "Room Type") {
-            g.selectAll("*").remove();
-            RoomType();
-        }
-        else {
-            g.selectAll("*").remove();
-            PriceRange();
-        }
-
-    }
-
-
+    
+	
     var margin = {top: 20, right: 20, bottom: 30, left: 40};
 
     var width = 960 - margin.left - margin.right,
         height = 500 - margin.top - margin.bottom;
 
-    var svg = d3.select("#barplots").append("svg")
+    var svg = d3.select(".barplots").append("svg")
             .attr("width", width + margin.left + margin.right)
             .attr("height", height + margin.top + margin.bottom);
 
@@ -80,10 +79,36 @@ function RoomType() {
                     continue;
             }
         }
+		var keys = csvdata.columns.slice(1);
 
-        var keys = csvdata.columns.slice(1);
-
-
+		if (changes == false) {
+		var neighbour_list = from_arr_to_set(csvdata.map(function (value) {
+            return value['neighbourhood'];
+        }));
+		
+		d3.select('#neigh_list')
+			.selectAll('input')
+			.data(neighbour_list)
+			.enter()
+			.append('li')
+			.append('label')
+			// .attr('for',function(d,i){ return 'a'+i; })
+			.text(function(d) { return d; })
+			.append('input')
+			.attr('class', 'myCheckboxs')
+			.attr('type', 'checkbox')
+			.attr('checked','true')
+			.on('click', handleClick)
+			// .attr("id", function(d,i) { return 'a'+i; })
+			.attr('value', function(d){
+				return d;
+			});
+		}
+		
+		if (changes == true) {
+		var csvdata = filterNeighbour(csvdata, district_filter);
+		}
+		
         csvdata.sort(function (a, b) {
             return b.total - a.total;
         });
@@ -299,6 +324,10 @@ function RoomType() {
 
             var keys = csvdata.columns.slice(1);
 
+			if (changes == true) {
+				var csvdata = filterNeighbour(csvdata, district_filter);
+			}
+			
             csvdata.sort(function(a, b) { return b.total - a.total; });
 
             var padding=180;
@@ -409,3 +438,51 @@ function RoomType() {
         });
     }
 }
+
+// help function
+function from_arr_to_set(myArray){
+    var a_set = [];
+    for (var i = 0; i < myArray.length; i++){
+        if(a_set.indexOf(myArray[i])>-1){
+            continue;
+        }else{
+            a_set.push(myArray[i]);
+        }
+    }
+    return a_set
+}
+
+function checkAll(){
+    d3.selectAll('input').attr('checked',true);
+    d3.selectAll('input').property('checked', true);
+	handleClick();
+}
+
+function uncheckAll(){
+    d3.selectAll('input').attr('checked',null);
+    d3.selectAll('input').property('checked', false);
+	handleClick();
+}
+
+function handleClick(){
+    var selected_neigh=[];
+    var input = document.getElementsByClassName('myCheckboxs');
+	// Check all the inputs
+    for (var i=0; i<input.length; i++){
+        if(input[i].checked){
+            selected_neigh.push(input[i].value);
+        }
+    }
+	changes = true
+	make_plot(changes, selected_neigh);
+}
+
+function filterNeighbour(data, list){
+    return data.filter(function(value){
+        return list.includes(value['neighbourhood']);
+    });
+}
+
+var changes = false;
+var district_filter = [];
+make_plot(changes, district_filter);

@@ -80,7 +80,24 @@ g{
     height:auto;
 }
 
-#barplots {
-	width:60%;
-	height:60%;
+.barplots {
+	width:auto;
+	height:auto;
+}
+
+.form{
+    background-color: #f6f6f6;
+    margin-top:20px;
+    margin-left:20px;
+    margin-right:20px;
+    margin-bottom: 20px;
+    border: 1px solid rgba(127,255,255,0.25);
+    border-radius:0.5em;
+    width:25%;
+    float: left;
+}
+
+#selector {
+	width:50%;
+	float:right;
 }

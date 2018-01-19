@@ -5,7 +5,7 @@
     <title>Analysis</title>
     <script src="https://d3js.org/d3.v4.min.js" charset="utf-8"></script>
     <link rel="stylesheet" href="css/bar.css">
-    <script src="js/bar.js"></script>
+    
 </head>
 <body>
 <div class="airbnb">
@@ -19,6 +19,19 @@
         <li class="nav_li"><a href="analysis.html">Analysis</a></li>
     </ul>
 </nav>
-<div id="barplots"></div>
+<div id="full">
+<div class="barplots"></div>
+<div class="form">
+    <form id="neigh_checkbox">
+        <b>Neighbourhood:</b> <br/>
+        <ul id="neigh_list"></ul>
+    </form>
+    <button type="button" onclick="checkAll()">Check All</button>
+    <button type="button" onclick="uncheckAll()">Uncheck All</button>
+</div>
+</div>
+<div id="selector"></div>
+</div>
+<script src="js/bar.js"></script>
 </body>
 </html>

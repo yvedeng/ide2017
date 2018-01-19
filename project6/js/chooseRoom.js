@@ -35,7 +35,7 @@ d3.csv("data/listings.csv", function(error, data) {
                 continue;
         }
     }
-
+	
     var neighbour_list = from_arr_to_set(availability.map(function (value) {
         return value['neighbourhood'];
     }));
